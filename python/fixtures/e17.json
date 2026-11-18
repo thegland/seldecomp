@@ -1,0 +1,1 @@
+{"case": "e17", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) contvars(x3 4)", "rc": 198, "output": ["x3 is in contvars() but is not a raking variable"]}

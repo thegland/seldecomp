@@ -1,0 +1,1 @@
+{"case": "e07", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) trimhirel(1.05)", "rc": 430, "output": ["raking did not reach its targets: 2 margins missed by more than", "    ctrltolerance(); worst: x1 = 3 (raked share 32.92%, target 49.71%); the", "    trimming bounds are binding: relax them, or specify force to keep the", "    results"]}

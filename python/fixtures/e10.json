@@ -1,0 +1,1 @@
+{"case": "e10", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) fixothermargins", "rc": 198, "output": ["fixothermargins requires sequentially or individually"]}

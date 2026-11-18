@@ -1,0 +1,1 @@
+{"case": "e15", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) focalgroup(7)", "rc": 459, "output": ["focalgroup(7) is neither a value nor a value label of group; its values are 0", "    (Group zero) and 1 (Group one)"]}

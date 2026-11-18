@@ -1,0 +1,1 @@
+{"case": "e06", "cmd": "seldecomp y xr x2 [pw=wt], by(group)", "rc": 459, "output": ["raking support failure: these levels of the reference group (group = 1 (Group", "    one)) have no focal group observations (group = 0 (Group zero)):", "    xr = 8", "collapse or drop these levels, or rake the other group with focalgroup(1)"]}

@@ -1,0 +1,1 @@
+{"case": "e12", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) detail", "rc": 198, "output": ["detail requires sequentially"]}

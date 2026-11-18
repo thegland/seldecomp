@@ -1,0 +1,1 @@
+{"case": "e08", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) trimhirel(1.25) trimloabs(.9)", "rc": 198, "output": ["stage 1: the trimming bounds contradict each other: trimloabs() is above", "    trimhirel() times the base weight of 77 focal group observations"]}

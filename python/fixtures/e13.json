@@ -1,0 +1,1 @@
+{"case": "e13", "cmd": "seldecomp y x1 group [pw=wt], by(group)", "rc": 198, "output": ["the by() variable group cannot be a raking variable"]}

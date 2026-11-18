@@ -1,0 +1,1 @@
+{"case": "e20", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) iterate(1)", "rc": 430, "output": ["raking did not reach its targets: 1 margin missed by more than ctrltolerance()", "    (raking stopped at iterate()); worst: x1 = 1 (raked share 19.16%, target", "    21.72%); specify force to keep the results"]}

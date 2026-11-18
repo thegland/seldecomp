@@ -1,0 +1,1 @@
+{"case": "e14", "cmd": "seldecomp y x1 x2 x1 [pw=wt], by(group)", "rc": 198, "output": ["raking variable x1 specified more than once"]}

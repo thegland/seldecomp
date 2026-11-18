@@ -1,0 +1,1008 @@
+* More cases of seldecomp (Stata) for the tests of the Python version: one per line,
+*   <name> @<dataset> : <seldecomp command>      on data/<dataset>.dta (t: the test data)
+*   + <name> : <command>                         run on the results of the case before it
+Ez01 @s1 : seldecomp y0 a b, by(g)
++ Ez01f1 : seldecomp, diagnostics
+Ez02 @s1 : seldecomp y0 (a) (b c5), by(g) sequentially reverse detail
+Ez03 @s1 : seldecomp yc a b, by(g)
+Ez04 @s1 : seldecomp yc a b [pw=w], by(g) sequentially bayesboot(reps(10) rseed(3) generate(bw) nodots citable)
++ Ez04f1 : estat bootstrap, all
+Ez05 @s1 : seldecomp y one a, by(g)
+Ez06 @s1 : seldecomp y one, by(g)
+Ez07 @s1 : seldecomp y (one) (a b), by(g) sequentially fixothermargins
+Ez08 @s1 : seldecomp y0 a b, by(g) bayesboot(reps(12) rseed(8) generate(bw) nodots percentile bc)
++ Ez08f1 : seldecomp, level(90)
+Ez10 @s1 : seldecomp y ro b, by(g)
+Ez11 @s1 : seldecomp y ro b, by(g) focalgroup(1)
+Ez12 @s1 : seldecomp y ro b, by(g) focalgroup(1) insupport covariatedetail
+Ez13 @s1 : seldecomp y fo b [pw=w], by(g) sequentially
+Ez14 @s1 : seldecomp y (fo) (b c5) [pw=w], by(g) sequentially fixothermargins reverse detail
+Ez15 @s1 : seldecomp y (fo) (b c5) [pw=w], by(g) individually fixothermargins
+Ez16 @s1 : seldecomp y fo b [pw=w], by(g) insupport sequentially detail diagnostics
+Ez17 @s1 : seldecomp y fo ro, by(g)
+Ez18 @s1 : seldecomp y fo thin [pw=w], by(g) trimloabs(.3) trimsupportoverride
+Ez19 @s1 : seldecomp y fo b [pw=w], by(g) trimlorel(.5) force
+Ez20 @s1 : seldecomp y fo##b c5 [pw=w], by(g) covariatedetail mincell(5)
+Et01 @s2 : seldecomp y a b, by(g)
+Et02 @s2 : seldecomp y a b [pw=w], by(g) sequentially reverse detail covariatedetail diagnostics mincell(3)
+Et03 @s2 : seldecomp y a c.z [pw=w], by(g) contvars(z 3)
+Et04 @s2 : seldecomp y a b [pw=w], by(g) bayesboot(reps(8) rseed(1) generate(bw) nodots bca citable)
++ Et04f1 : estat bootstrap, all
+Et05 @s2 : seldecomp y a b [pw=w], by(g) bayesboot(reps(8) rseed(2) cluster(cl) generate(bw) nodots bca)
++ Et05f1 : seldecomp, level(80) citable
+Et06 @s2 : seldecomp y a [pw=w], by(g3) chain
+Et07 @s2 : seldecomp y a b [pw=w], by(g3) chain sequentially bayesboot(reps(6) rseed(4) generate(bw) nodots)
+Et08 @s2 : seldecomp y a##b [pw=w], by(g) mincell(0)
+Et09 @s2 : seldecomp y a b [pw=w] in 1/12, by(g)
+Et10 @s2 : seldecomp y a b [pw=w] in 1/6, by(g)
+Et11 @s2 : seldecomp y a b [pw=w] if id <= 3, by(g)
+Et12 @s2 : seldecomp y a b [pw=w], by(g) bayesboot(reps(2) rseed(2) generate(bw) nodots)
+Et13 @s2 : seldecomp y a b [pw=w], by(g) bayesboot(reps(3) rseed(2) generate(bw) nodots percentile bc)
+Et14 @s2 : seldecomp y a b [pw=w] if cl <= 2, by(g) bayesboot(reps(5) rseed(2) cluster(cl) generate(bw) nodots)
+Et15 @s2 : seldecomp y a b [pw=w] if cl <= 3, by(g) bayesboot(reps(5) rseed(2) cluster(cl) generate(bw) nodots)
+Ec01 @s1 : seldecomp ybig a b c5 [pw=w], by(g) sequentially reverse
+Ec02 @s1 : seldecomp ybig a b c5 [pw=w], by(g) sequentially cformat(%12.0fc)
+Ec03 @s1 : seldecomp ybig a b c5 [pw=w], by(g) sequentially cformat(%9.3e)
+Ec04 @s1 : seldecomp ysml a b c5 [pw=w], by(g) individually covariatedetail
+Ec05 @s1 : seldecomp ysml a b c5 [pw=w], by(g) cformat(%12.10f)
+Ec06 @s1 : seldecomp yneg a b c5 [pw=w], by(g) sequentially detail
+Ec07 @s1 : seldecomp yb a b c5 [pw=w], by(g) outcomes(ybig ysml yneg) sequentially
++ Ec07f1 : seldecomp, cformat(%9.2f)
+Ec09 @s1 : seldecomp y a b [pw=w], by(g) ratio(den0) outcomes(yb yneg)
+Ec10 @s1 : seldecomp yf a b c5 [pw=wf], by(gf)
+Ec11 @s1 : seldecomp ybig a b [pw=w], by(g) bayesboot(reps(12) rseed(5) generate(bw) nodots citable) cformat(%10.0f) pformat(%6.4f) sformat(%8.3f)
++ Ec11f1 : seldecomp, cformat(%12.5g) pformat(%5.3f) sformat(%6.2f) level(99)
++ Ec11f2 : estat bootstrap, percentile
+Ec12 @s1 : seldecomp ysml a b [pw=w], by(g) sequentially bayesboot(reps(12) rseed(6) generate(bw) nodots normal tinterval)
+Ew01 @s1 : seldecomp y a b [pw=wf], by(g)
+Ew02 @s1 : seldecomp y a b [aw=wi], by(g) sequentially
+Ew03 @s1 : seldecomp y a b [iw=wi], by(g) generate(rk)
+Ew04 @s1 : seldecomp y a b [pw=w0], by(g) covariatedetail
+Ew05 @s1 : seldecomp y a b [pw=wm], by(g) sequentially generate(rk)
+Ew06 @s1 : seldecomp y a b [pw=wbig], by(g) trimhirel(1.5) force iterate(200) diagnostics
+Ew07 @s1 : seldecomp y a b [pw=wsm], by(g) trimhirel(1.5) force iterate(200) generate(rk)
+Ew08 @s1 : seldecomp y a b [pw=wneg], by(g)
+Ew09 @s1 : seldecomp y a b [pw=w0] if w0 == 0, by(g)
+Ew10 @s1 : seldecomp y a b [pw=wbig], by(g) trimhiabs(2500000) trimloabs(600000) force iterate(300)
+Ew11 @s1 : seldecomp y a b [pw=wsm], by(g) trimhiabs(.0000025) trimfrequency(often) force iterate(300)
+Ew12 @s1 : seldecomp y a b [pw=w0], by(g) bayesboot(reps(10) rseed(3) generate(bw) nodots)
+Ew13 @s1 : seldecomp y a b [pw=wm], by(g) bayesboot(reps(10) rseed(3) cluster(clm) generate(bw) nodots bca)
+Es01 @s1 : seldecomp y sn sm, by(gstr)
+Es02 @s1 : seldecomp y sn sm, by(gstr) focalgroup("beta two") covariatedetail
+Es03 @s1 : seldecomp y sn##sm b, by(gstr) sequentially detail
+Es04 @s1 : seldecomp y a b, by(gneg)
+Es05 @s1 : seldecomp y a b, by(gneg) focalgroup(5)
+Es06 @s1 : seldecomp y a b, by(gf) focalgroup(1.5)
+Es07 @s1 : seldecomp y a b, by(gf) focalgroup(.5)
+Es08 @s1 : seldecomp y a b, by(gm)
+Es09 @s1 : seldecomp y a b, by(gl) focalgroup("Rural area") varlabels
+Es10 @s1 : seldecomp y a b, by(gl) focalgroup(2) varlabels covariatedetail
+Es11 @s1 : seldecomp y lab_long c5 b, by(gl) varlabels sequentially covariatedetail
+Es12 @s1 : seldecomp y (demo: lab_long c5) (a_very_long_variable_name_32char), by(gl) varlabels sequentially reverse detail
+Es13 @s1 : seldecomp y a_very_long_variable_name_32char##lab_long, by(g) covariatedetail
+Es15 @s1 : seldecomp y a_very_long_variable_name_32char lab_long, by(g) individually bayesboot(reps(10) rseed(9) generate(bw) nodots citable) varlabels
++ Es15f1 : estat bootstrap, all
++ Es15f2 : seldecomp, varlabels diagnostics
+Es16 @s1 : seldecomp y d dec neg big, by(g) covariatedetail
+Es17 @s1 : seldecomp y d##dec neg#big, by(g) sequentially
+Es18 @s1 : seldecomp y many, by(g) covariatedetail mincell(5)
+Es19 @s1 : seldecomp y many b, by(g) sequentially mincell(25) diagnostics
+Es20 @s1 : seldecomp y cmv sm, by(g) covariatedetail
+Eh01 @s1 : seldecomp y a b, by(g4) chain
++ Eh01f1 : seldecomp, diagnostics
+Eh02 @s1 : seldecomp y (a) (b c5) [pw=w], by(g4) chain sequentially fixothermargins varlabels
+Eh03 @s1 : seldecomp y a b [pw=w], by(g5) chain ratio(den)
+Eh04 @s1 : seldecomp y a c.z [pw=w], by(g5) chain contvars(z 4) sequentially
+Eh05 @s1 : seldecomp y a b [pw=w], by(g5) chain insupport
+Eh06 @s1 : seldecomp y a b [pw=w], by(g4) chain bayesboot(reps(10) rseed(2) generate(bw) nodots citable bca)
++ Eh06f1 : estat bootstrap, all
++ Eh06f2 : seldecomp, level(90)
+Eh07 @s1 : seldecomp y (a) (b) [pw=w], by(g5) chain sequentially bayesboot(reps(8) rseed(2) cluster(cl) generate(bw) nodots)
+Eh08 @s1 : seldecomp y a b [pw=w] if g5 != 3, by(g5) chain
+Eh09 @s1 : seldecomp y a b [pw=w] if g5 <= 2, by(g5) chain
+Eh10 @s1 : seldecomp y a b [pw=w], by(g5) chain trimhirel(1.3) force iterate(100)
+Eh12 @s1 : seldecomp y a b [pw=w], by(g4) chain mincell(100)
+Eq01 @s1 : seldecomp y a c.zt, by(g) contvars(zt 10)
+Eq02 @s1 : seldecomp y a c.zt, by(g) contvars(zt 2)
+Eq03 @s1 : seldecomp y a c.zs [pw=w], by(g) contvars(zs 8, refgroup)
+Eq04 @s1 : seldecomp y a c.zs [pw=w], by(g) contvars(zs 8, focalgroup)
+Eq05 @s1 : seldecomp y a c.zm [pw=w], by(g) contvars(zm 5)
+Eq06 @s1 : seldecomp y a c.zf [pw=wf], by(g) contvars(zf 5)
+Eq07 @s1 : seldecomp y c.z##c.zs, by(g) contvars(z 3 zs 3)
+Eq08 @s1 : seldecomp y a##c.z b, by(g) contvars(z 4) sequentially detail
+Eq09 @s1 : seldecomp y c.z c.zs c.zt [pw=w], by(g) contvars(z 5 zs 4 zt 3) sequentially reverse
+Eq10 @s1 : seldecomp y c.z [pw=w], by(g) contvars(z 20)
+Eq11 @s1 : seldecomp y c.z [pw=w], by(g) contvars(z 100)
+Eq12 @s1 : seldecomp y c.zt, by(g) contvars(zt 6, pooled)
+Eq13 @s1 : seldecomp y a c.z [pw=w], by(g) contvars(z 5, recut) bayesboot(reps(10) rseed(4) generate(bw) nodots)
+Eq14 @s1 : seldecomp y a c.z [pw=w], by(g) contvars(z 5, refgroup recut) bayesboot(reps(10) rseed(4) generate(bw) nodots)
+Ex01 @s1 : seldecomp y a##b##c5, by(g)
+Ex02 @s1 : seldecomp y a#b#c5, by(g)
+Ex03 @s1 : seldecomp y i.a##i.b i.c5, by(g) sequentially
+Ex04 @s1 : seldecomp y a##b b##c5, by(g)
+Ex05 @s1 : seldecomp y (a##b) (a##c5), by(g) sequentially fixothermargins
+Ex06 @s1 : seldecomp y a#b a, by(g)
+Ex07 @s1 : seldecomp y a##b##c.z, by(g) contvars(z 2)
+Er01 @s1 : seldecomp y a b c5 d sn [pw=w], by(g) iterate(3) force sequentially
+Er02 @s1 : seldecomp y a b c5 d sn [pw=w], by(g) iterate(3)
+Er04 @s1 : seldecomp y a b c5 d sn [pw=w], by(g) ctrltolerance(.5) iterate(2)
+Er06 @s1 : seldecomp y a b c5 [pw=w], by(g) trimhirel(1.2) trimlorel(.8) trimhiabs(3) trimloabs(.4) trimfrequency(often) force noisily iterate(60)
+Er07 @s1 : seldecomp y a b c5 [pw=w], by(g) trimhirel(50) trimlorel(.01) noisily
+Er08 @s1 : seldecomp y (a) (b) (c5) [pw=w], by(g) sequentially fixothermargins reverse detail trimhirel(1.2) force iterate(80) diagnostics
+Er09 @s1 : seldecomp y (a) (b) (c5) [pw=w], by(g) individually trimhiabs(2.5) trimfrequency(once) force
+Ed01 @s1 : seldecomp y (a) (b c5) [pw=w], by(g) sequentially reverse detail bayesboot(reps(15) rseed(7) generate(bw) nodots bca ties citable)
++ Ed01f1 : seldecomp, level(99.9)
++ Ed01f2 : seldecomp, level(50) citable
++ Ed01f3 : seldecomp, level(10)
++ Ed01f4 : seldecomp, cformat(%9.0f) pformat(%4.2f) sformat(%5.1f)
++ Ed01f5 : estat bootstrap
++ Ed01f6 : estat bootstrap, bca
++ Ed01f7 : estat bootstrap, normal percentile
++ Ed01f8 : estat bootstrap, all nolegend
++ Ed01f9 : estat bootstrap, verbose
++ Ed01f10 : seldecomp, diagnostics covariatedetail varlabels citable level(95)
+Ed02 @s1 : seldecomp y a b [pw=w], by(g)
++ Ed02f1 : estat bootstrap
++ Ed02f2 : seldecomp, level(90)
++ Ed02f3 : seldecomp, citable
++ Ed02f4 : seldecomp, covariatedetail
+Ed03 @s1 : seldecomp y a b [pw=w], by(g) covariatedetail
++ Ed03f1 : seldecomp, covariatedetail
++ Ed03f2 : seldecomp
+Ed04 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(10) rseed(7) generate(bw) nodots level(99.99))
+Ed05 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(10) rseed(7) generate(bw) nodots level(10) citable)
+Ed06 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(20) rseed(7) generate(bw) nodots level(90) bc percentile)
++ Ed06f1 : estat bootstrap, all
+Ed07 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(20) rseed(8) generate(bw) nodots level(80) bc bca cluster(cl))
++ Ed07f1 : seldecomp, level(90)
++ Ed07f2 : seldecomp, level(95)
+Ed08 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(10) rseed(7) cluster(cl1) generate(bw) nodots)
+Ed09 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(10) rseed(7) cluster(cls) generate(bw) nodots bca)
+Ll01 @s4 : seldecomp y a b c, by(grp)
+Ll02 @s4 : seldecomp y a b c, by(grp) varlabels covariatedetail diagnostics
+Ll03 @s4 : seldecomp y (a) (b c) e, by(grp) sequentially reverse detail varlabels
++ Ll03f1 : seldecomp, covariatedetail
++ Ll03f2 : seldecomp, diagnostics varlabels
+Ll04 @s4 : seldecomp y a##b c, by(grp) varlabels covariatedetail mincell(40)
+Ll05 @s4 : seldecomp y city txt, by(grp) covariatedetail
+Ll06 @s4 : seldecomp y city##txt a, by(grp) sequentially varlabels mincell(30)
+Ll07 @s4 : seldecomp y only a, by(grp)
+Ll08 @s4 : seldecomp y only a, by(grp) focalgroup(2)
+Ll09 @s4 : seldecomp y only a, by(grp) focalgroup("Second {group}")
+Ll10 @s4 : seldecomp y only a, by(grp) focalgroup("First group (the focal one)") insupport varlabels
+Ll11 @s4 : seldecomp y only a [pw=w], by(grp) trimloabs(.4)
+Ll12 @s4 : seldecomp y a b [pw=w], by(g3) chain varlabels
++ Ll12f1 : seldecomp, diagnostics
+Ll13 @s4 : seldecomp y (demo: a b) (c e) [pw=w], by(g3) chain sequentially fixothermargins varlabels
+Ll14 @s4 : seldecomp y a b c.z [pw=w], by(grp) contvars(z 4) individually fixothermargins varlabels covariatedetail
+Ll15 @s4 : seldecomp y a b [pw=w], by(grp) varlabels bayesboot(reps(12) rseed(3) cluster(cl) generate(bw) nodots citable bca)
++ Ll15f1 : estat bootstrap, all
++ Ll15f2 : seldecomp, varlabels level(90) citable
+Ll16 @s4 : seldecomp y a b c [pw=w], by(grp) trimhirel(1.1) varlabels
+Ll17 @s4 : seldecomp y a b c [pw=w], by(grp) trimhirel(1.1) force varlabels diagnostics iterate(50)
+Ll18 @s4 : seldecomp y (a) (b) (c) [pw=w], by(grp) sequentially fixothermargins trimhirel(1.2) force iterate(50) varlabels detail
+Ll19 @s4 : seldecomp y a city, by(grp) outcomes(z) varlabels
+Ll20 @s4 : seldecomp y a b, by(grp) ratio(w) varlabels sequentially
+Ll21 @s4 : seldecomp y txt##a, by(grp) individually varlabels
+Ll22 @s4 : seldecomp y a b c e city txt, by(grp) sequentially covariatedetail
+Ll23 @s4 : seldecomp y a b, by(g3)
+Ll24 @s4 : seldecomp y a b, by(grp) focalgroup(3)
+Ll25 @s4 : seldecomp y a b, by(grp) focalgroup("Third")
+Ll26 @s4 : seldecomp y a b if city != "Zürich", by(grp)
+Ll27 @s4 : seldecomp y a b if txt == "50% | half" | city == "New York, NY", by(grp)
+Ll28 @s4 : seldecomp y a c, by(city) chain
+Ll29 @s4 : seldecomp y a c, by(txt)
+Ll30 @s4 : seldecomp y a c if txt != "  padded", by(txt) focalgroup("a & b / c")
+Ff01 @s1 : seldecomp y one fo, by(g) insupport
+Ff02 @s1 : seldecomp y fo one b, by(g) insupport sequentially
+Ff03 @s1 : seldecomp y (one) (fo b) [pw=w], by(g) insupport sequentially fixothermargins reverse detail
+Ff04 @s1 : seldecomp y one fo [pw=w], by(g) insupport bayesboot(reps(10) rseed(3) generate(bw) nodots)
+Ff05 @s1 : seldecomp yb one neg fo sm, by(gl) mincell(5) insupport cformat(%10.4f) sequentially ctrltolerance(.01)
+Ff06 @s1 : seldecomp y a b, by(g) tolerance(+.001)
+Ff07 @s1 : seldecomp y a b [pw=w], by(g) tolerance(+1e-8) ctrltolerance(+1e-6) trimhirel(+50) trimlorel(+.01) trimhiabs(+90) trimloabs(+.0001)
+Ff08 @s1 : seldecomp y a b [pw=w], by(g) tolerance(+0)
+Ff09 @s1 : seldecomp y a b [pw=w], by(g) tolerance(-.001)
+Ff10 @s1 : seldecomp y a b [pw=w], by(g) tolerance(++.001)
+Ff11 @s1 : seldecomp y a b [pw=w0] if id == 19, by(g)
+Ff12 @s1 : seldecomp y a b [pw=w0] if id == 19 | id == 38, by(g)
+Ff13 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(20) rseed(7) generate(bw) nodots bca)
++ Ff13a : seldecomp, level(99.9)
++ Ff13b : estat bootstrap
++ Ff13c : seldecomp, level(80.1)
++ Ff13d : estat bootstrap, all
++ Ff13e : seldecomp, level(66.6) citable
++ Ff13f : estat bootstrap, normal percentile
++ Ff13g : seldecomp, level(99.99)
++ Ff13h : estat bootstrap, bca
+Kk01 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(20) rseed(7) generate(bw) nodots level(99.9))
++ Kk01a : estat bootstrap
++ Kk01b : estat bootstrap, all
++ Kk01c : seldecomp
+Kk02 @s1 : seldecomp y a b [pw=w], by(g4) chain bayesboot(reps(12) rseed(7) generate(bw) nodots level(80.1) bca)
++ Kk02a : estat bootstrap
++ Kk02b : seldecomp, level(66.6)
++ Kk02c : estat bootstrap, bca
+Kk03 @s1 : seldecomp y (a) (b c5) [pw=w], by(g) sequentially bayesboot(reps(12) rseed(7) generate(bw) nodots level(99.9) citable)
++ Kk03a : seldecomp, level(80.1) citable
++ Kk03b : estat bootstrap, all
+Kk04 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(12) rseed(7) generate(bw) nodots level(99.99) cluster(cl))
++ Kk04a : estat bootstrap
+Kk05 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(12) rseed(7) generate(bw) nodots level(12.3))
++ Kk05a : estat bootstrap
+Kk10 @s1 : seldecomp y one ro, by(g)
+Kk11 @s1 : seldecomp y one ro b, by(g) sequentially
+Kk12 @s1 : seldecomp y ro one, by(g) focalgroup(1)
+Kk13 @s1 : seldecomp y one fo, by(g)
+Kk14 @s1 : seldecomp y one fo [pw=w], by(g) trimloabs(.3)
+Kk15 @s1 : seldecomp y one fo [pw=w], by(g) trimloabs(.3) trimsupportoverride
+Kk16 @s1 : seldecomp y one c.z, by(g) contvars(z 4, refgroup)
+Kk17 @s1 : seldecomp y one ro c.z, by(g) contvars(z 4, refgroup)
+Kk18 @s1 : seldecomp y (one) (ro b), by(g) sequentially fixothermargins
+Kk19 @s1 : seldecomp y one a, by(g4) chain insupport
+Kk20 @s1 : seldecomp y one fo, by(g5) chain insupport
+Kk21 @s1 : seldecomp y one##fo b, by(g) insupport
+Kk22 @s1 : seldecomp y one fo, by(g) insupport covariatedetail diagnostics
+Kk23 @s1 : seldecomp y one fo [pw=w], by(g) insupport bayesboot(reps(8) rseed(2) generate(bw) nodots bca)
+Kk24 @s1 : seldecomp y one, by(g) insupport
+Kk25 @s1 : seldecomp y one ro, by(g) insupport
+Kk30 @s1 : seldecomp y a b [pw=w], by(g) iterate(+50)
+Kk31 @s1 : seldecomp y a b [pw=w], by(g) mincell(+5)
+Kk32 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(+10) rseed(1) generate(bw) nodots)
+Kk33 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(10) rseed(1) generate(bw) nodots level(+90))
+Kk34 @s1 : seldecomp y a b [pw=w], by(g) focalgroup(+1)
+Kk35 @s1 : seldecomp y a c.z [pw=w], by(g) contvars(z +4)
+Kk36 @s1 : seldecomp y a b [pw=w], by(g) bayesboot(reps(10) rseed(+1) generate(bw) nodots)
+Kk37 @s1 : seldecomp y a b [pw=w], by(g) trimhirel(+2) trimfrequency(once) force
+Xkn01 @t : seldecomp earn xj xc [iw=wt] if id <= 500, by(g3) chain trimloabs(0.61) bayesboot(generate(bw) nodots level(80) rseed(4229) cluster(cluster) reps(20) tinterval normal) force iterate(400)
++ Xkn01f1 : estat bootstrap
+Rm410003 @t : seldecomp ym xj xc i.x2 [aw=wt], by(gs) fixothermargins varlabels focalgroup("alpha") individually cformat(%12.5g)
+Rm410004 @t : seldecomp y x1 c.xt if id <= 500, individually by(gs) contvars(xt 10) diagnostics bayesboot(rseed(48990) nodots reps(6) ties generate(bw))
+Rm410005 @t : seldecomp y ta (blk: x2) if !missing(ym), by(group) rati(hrs) detail sequentially varlabels generate(rk) focalgroup("Group one")
++ Rm410005f1 : seldecomp, covariatedetail
+Rm410012 @s1 : seldecomp ybig many fo i.a [aw=wi] in -448/l, by(gm)
+Rm410016 @s1 : seldecomp yf (demo: a a_very_long_variable_name_32char many##c.z) [pw=wm] if zf >= -1.5 & zf < 2 in f/1448, by(gm) force trimlorel(0.4) rati(denm) contvars(z 5, refgroup) outcomes(ym ybig) generate(rk) sequentially
+Rm410019 @t : seldecomp ym xs ta i.xc x1 c.xt [pw=wz], by(g3) chain contvars(xt 10)
+Rm410020 @s1 : seldecomp ym c5, deta sequentially by(gl) trimloabs(0.42) reverse iterate(40) covariatedetail force cformat(%9.2e)
+Rm410021 @s1 : seldecomp y (i.c5 c.zm) [pw=wbig], by(g) trimhirel(1.7) focalgrou(1) iterate(200) trimfrequency(once) contva(zm 3)
+Rm410024 @s1 : seldecomp ybig d dec c.zs c.zf, reverse trimhirel(1.14) pformat(%5.2f) by(gm) trimsupportoverride sequen ctrltolerance(1e-4) ratio(den) trimhiabs(3.83) iterat(400) trimloabs(0.72) bayesboot(cluster(clm) tinterval percentile reps(15) nodots generate(bw) rseed(26340)) contvars(zf 2 zs 2) force trimsupportoverride cformat(%12.5g) detail
+Rm410026 @t : seldecomp y i.xc ta##x4 xj [aw=wz] if id > 300 & id <= 1700, by(group) cformat(%10.4f) varlabels
+Rm410027 @t : seldecomp earn (work: xj xc x1##ta) [pw=wz], by(group) individually focalgroup("Group zero") ratio(hm) insupport outcomes(ym y)
+Rm410031 @s2 : seldecomp y (work: c.z) (A1: a##b) in -305/l, by(g) contvars(z 3) fixoth individually
+Rm410032 @t : seldecomp earn (x1 i.x2 ta##c.x3 x4), by(g3) sequentially ratio(hrs) cformat(%9.3f) chain insupport contvars(x3 2)
++ Rm410032f1 : seldecomp, covariatedetail
+Rm410034 @t : seldecomp earn (ta xs) (A1: c.x3) [aw=wz], by(group) trimhiabs(2.43) contvars(x3 5) force covariatedetail tolerance(1e-10)
+Rm410040 @t : seldecomp y (x2) c.xt i.ta [pw=wt], by(g3) contvars(xt 2, refgroup) insupport chain sequentially
++ Rm410040f1 : seldecomp
+Rm410041 @t : seldecomp ybin (work: xc x1##ta), by(g3) trimhirel(2.21) cformat(%12.5g) trimlorel(0.93) mincell(100) trimfrequency(sometimes) trimhiabs(2.54) chain sequentially
+Rm410043 @s1 : seldecomp ym dec many i.big [aw=wi], by(gneg) ctrltolerance(1e-4) outcomes(ysml)
+Rm410049 @t : seldecomp earn i.x4 [aw=wz] if inlist(x1, 1, 2), covariatedetail by(gs)
++ Rm410049f1 : seldecomp
+Rm410051 @t : seldecomp ym x4 x1 [pw=wt], by(nosuchvar) by(g3) chain sequentia varlabe
+Rm410052 @t : seldecomp ybin i.x2 [aw=wz] if id <= 500, by(g3) ratio(hm) reverse bayesboot(level(80) generate(bw) r(25) rseed(16641) nodots) chain sformat(%7.1f) sequentially
+Rm410053 @s1 : seldecomp ybig neg (geo: i.fo dec), by(g5) chain sequentially detail rat(denm) tolerance(1e-4) fixothe
+Rm410055 @t : seldecomp y x4##c.xt, by(g3) contvars(xt 10, pooled) iterate(100) trimloabs(0.52) cformat(%8.2f) force chain
++ Rm410055f1 : seldecomp, covariatedetail
+Rm410057 @s2 : seldecomp y (c.z) (b), by(g) contvars(z 2, refgroup recut) focalgroup(1) sformat(%7.1f) bayesboot(rseed(13608) generate(bw) normal nodots ties reps(12)) tolerance(1e-12)
++ Rm410057f1 : seldecomp, covariatedetail varlabels
++ Rm410057f2 : estat bootstrap, all percentile
+Rm410059 @t : seldecomp y ta##x1, by(gs) fixothermargins focalgroup("alpha") outcomes(earn) individually
+Rm410060 @t : seldecomp ybin x1##ta [pw=wz], by(group) focalgroup("Group one") mincell(0) sequentially
+Rm410063 @s1 : seldecomp yneg a i.lab_long many [pw=wi] if z > -1 in f/488, by(gl) trimhiabs(3.54) force trimhirel(1.75) trimfrequency(often) iterate(100) trimlorel(0.35) reverse sequentially
+Rm410072 @s1 : seldecomp yneg lab_long a_very_long_variable_name_32char i.dec [pw=wsm], by(gneg) individually focalgr(-1) varlabels insuppor
+Rm410076 @s1 : seldecomp yneg (cmv lab_long) (blk: big) (geo: sn) [pw=w] if neg < 1 | b == 1, by(gneg) sequentially trimlorel(0.35) trimhiabs(3.31) force covariatedetail reverse focalgroup(5) iterate(40)
++ Rm410076f1 : seldecomp
+Rm410079 @t : seldecomp y x2 x4 (geo: x1) [pw=wz], by(group) generate(rk) diagnostics individually focalgroup("Group zero")
+Rm410080 @t : seldecomp y x4, by(g3) force mincell(25) iterate(1) chain
++ Rm410080f1 : seldecomp, covariatedetail varlabels
+Rm410082 @s1 : seldecomp ybig dec [pw=wm], by(g) generate(rk, replace) sequent covariatedetail fixothermargins reverse tolerance(.001)
+Rm410083 @t : seldecomp ym x4##x2 [pw=wt], by(group) force diagnostics covariatedetail
+Rm410084 @t : seldecomp ym (A1: x1 xc) [iw=wz], trimlorel(0.61) by(group) trimfrequency(once) individually diagnosti force iterate(200) trimhiabs(2.39)
+Rm410085 @s2 : seldecomp y i.b [pw=w], varlabels force trimfrequency(sometimes) by(g) trimhirel(1.04)
++ Rm410085f1 : seldecomp, diagnostics
+Rm410094 @t : seldecomp y c.x3 ta [pw=wt] if id > 300 & id <= 1700, by(group) individually generate(rk) contvars(x3 5) iterate(5) force
++ Rm410094f1 : seldecomp, diagnostics covariatedetail varlabels
+Rm410101 @t : seldecomp ybin x2 x1 xj [aw=wt], by(group) force sequentially fixotherma focalgroup("Group zero") insupp
+Rm410102 @s1 : seldecomp y d sn [pw=wsm] if many <= 30, by(gl) generate(rk) insupport mincell(1)
++ Rm410102f1 : seldecomp, diagnostics covariatedetail varlabels
+Rm410108 @t : seldecomp ybin xs##c.x3 x4 [pw=wz], by(gs) individually fixothermargins contva(x3 4, pooled) rati(hrs)
+Rm410112 @s1 : seldecomp ysml dec lab_long##c.zt [pw=wm], by(gstr) ratio(ysml) individually contvars(zt 4) cformat(%8.2f)
+Rm410116 @s1 : seldecomp yf c5 dec a, by(g4) individually chain bayesboot(generate(bw) reps(25) rseed(90403) percentile nodots)
+Rm410118 @s2 : seldecomp y a [iw=w] if id <= 34, fixothermargi generate(rk) tolerance(1e-12) ratio(w) focalgroup(1) by(g) sequentially
++ Rm410118f1 : seldecomp, varlabels
+Rm410120 @t : seldecomp ym ta##x2 x1##x4 [pw=wz], by(gs) fixothermargins outcomes(ybin y) tolerance(1e-12) sequentially diagnostics
+Rm410122 @s1 : seldecomp yf (blk: fo) (c.zt) [pw=wm] if many <= 30, by(gneg) sequentially contvars(zt 4) mincell(5) ctrltolerance(1e-4) reverse fixothermargins detail
++ Rm410122f1 : seldecomp
+Rm410128 @t : seldecomp ybin (x4) x2, by(group) generate(rk) sequentially detail cformat(%10.4f)
++ Rm410128f1 : seldecomp, varlabels
+Rm410132 @t : seldecomp ym (A1: xr) x1##x4 if id <= 500, by(gs) bayesboot(reps(25) generate(bw) bc nodots rseed(91247))
+Rm410140 @s1 : seldecomp ysml (demo: b d c.zm) c.z [pw=wneg], indivi fixothermargins sformat(%7.1f) bayesboot(r(25) rseed(27866) generate(bw) nodots) contvars(zm 8 z 10) mincell(25) by(gf)
+Rm410141 @s1 : seldecomp ysml (a_very_long_variable_name_32char many) [iw=wm], by(gm) iterate(0)
+Rm410143 @t : seldecomp ybin ta##c.x3 xs x1 [pw=wz], by(group) contvars(x3 10) diagnostics noisil
++ Rm410143f1 : seldecomp, cformat(%9.3f)
+Rm410145 @s1 : seldecomp y0 thin d [pw=wi], by(gneg) outcomes(yneg ym) covariatedetail mincell(5)
+Rm410149 @t : seldecomp earn c.xt x1##x4 [pw=wt], by(group) outcomes(ybin y) individually contvars(xt 2) covariatedetail ctrltol(1e-4)
+Rm410151 @t : seldecomp ym c.x3 x1 i.xs ta [aw=wt], by(group) sequentially covariatedetail contvars(x3 3, refgroup) reverse diagnostics detail
+Rm410155 @s1 : seldecomp yneg (A1: i.sn) i.c5 (fo many) [aw=wbig], by(g) sequentially fixothermargins force detail
+Rm410162 @s1 : seldecomp yb a, force iterate(200) fixothermargins by(gm) trimhiabs(3.04) focalgroup(0) indiv
+Rm410163 @s1 : seldecomp ybig (i.sn) a_very_long_variable_name_32char##c.zt i.c5 [aw=wm], by(g4) contv(zt 2) chain sequentially force
++ Rm410163f1 : estat bootstrap, percentile bca
+Rm410164 @s1 : seldecomp ym c5 a#neg a_very_long_variable_name_32char [pw=w] if many <= 30, cformat(%12.0g) by(g4) chain ctrltolerance(1e-3)
+Rm410173 @s1 : seldecomp yneg many c.z a_very_long_variable_name_32char dec##c.zm a, trimhiabs(3.9) trimhirel(2.04) sequentially iterate(200) detail trimlorel(0.79) force by(gf) contvars(zm 4 z 2)
+Rm410182 @s2 : seldecomp y i.b i.a [pw=w], trimfrequency(often) force iterate(400) trimhiabs(2.32) trimloabs(0.76) by(g)
++ Rm410182f1 : seldecomp
+Rm410185 @s1 : seldecomp yf a_very_long_variable_name_32char, by(g5) sequ chain diagnost ctrltol(1e-4)
+Rm410191 @s1 : seldecomp y many sn#lab_long in -520/l, by(g) outcomes(yb)
++ Rm410191f1 : seldecomp, diagnostics covariatedetail
+Rm410215 @s1 : seldecomp yneg sn i.dec a [pw=w], insupport generate(rk) covariatedetail by(g) fixothermargins individually
+Rm410225 @t : seldecomp y xj i.xs [iw=wt], by(g3) varlabels chain
++ Rm410225f1 : seldecomp, diagnostics
+Rm410228 @s1 : seldecomp yf a_very_long_variable_name_32char b [pw=w], by(gl) level(90) ratio(den0)
+Rm410229 @s1 : seldecomp y (c.zs lab_long##c5 b##big c.zt) [pw=wm], by(gl) force trimsupportoverride contv(zt 3 zs 8) trimloabs(0.39) sequentially focalgroup("Rural area")
+Rm410235 @s1 : seldecomp ym a (demo: dec big) (A1: i.cmv) [iw=w], by(gf) diagnostics individually generate(rk, replace) fixothermargins
++ Rm410235f1 : seldecomp, diagnostics
+Rm410242 @s1 : seldecomp yf d [pw=wf], by(g4) trimhiabs(1.87) iterate(100) trimloabs(0.69) sequentially chain
+Rm410244 @s1 : seldecomp ybig (geo: i.a_very_long_variable_name_32char many c5##c.z dec) [aw=wf], by(gl) contvars(z 5) trimloabs(0.44) trimfrequency(once) bayesboot(rseed(30626) generate(bw) reps(8) nodots percentile) generate(rk)
+Rm420003 @s1 : seldecomp yc sm i.cmv [aw=wbig], by(gl) outcomes(yb) varlabels sformat(%8.3f) individually bayesboot(generate(bw) percentile nodots rseed(45746) reps(8) level(99)) focalgroup(2) generate(rk) fixothermargins
++ Rm420003f1 : estat bootstrap, all
+Rm420012 @t : seldecomp ybin x4 x2 c.xt xj if x4 != "east", by(group) contvars(xt 10, recut)
+Rm420015 @s1 : seldecomp ym (A1: lab_long d) (geo: i.big c.zt) (blk: c.zs neg), by(gf) mincell(0) insupport contvars(zs 8 zt 8) generate(rk) individually
+Rm420017 @t : seldecomp ybin (x2 x4) if ym < 12, by(group) fixotherma detail sequentially diagnosti ratio(hrs)
+Rm420018 @s1 : seldecomp ybig (work: sn##c.zs c.zm a_very_long_variable_name_32char) [pw=wi], bayesboot(generate(bw) nodots rseed(60514) bca level(99) reps(12) bc) sequentially by(g5) contvars(zs 8 zm 3, recut) chain
+Rm420021 @s2 : seldecomp y a (blk: b c.z), chain fixothermargins by(g3) sequentially contvars(z 4) bayesbo(rseed(18203) reps(8) generate(bw) citable nodots cluster(cl))
+Rm420022 @s2 : seldecomp y a [iw=w], by(g) insupport reverse mincel(25) detail sequentially focalgroup(0)
++ Rm420022f1 : seldecomp, diagnostics covariatedetail varlabels
+Rm420027 @t : seldecomp ybin x2##x4 [pw=wt], mincell(100) by(gs) detail focalgroup("beta") sequentially diagnostics
+Rm420030 @s1 : seldecomp ysml (a c.zm c.zs) fo [aw=wi] if !missing(ym), generate(rk) by(g5) chain contvars(zs 5 zm 10) force ratio(den0)
+Rm420031 @s1 : seldecomp yneg (demo: big a##lab_long neg##c.zt) [pw=wneg] if z > -1, diagnostics fixothermargins sequentiall contvars(zt 4) by(gstr)
++ Rm420031f1 : seldecomp, diagnostics cformat(%8.2f)
+Rm420033 @t : seldecomp ybin xj (blk: x2 xs) [pw=wt] if ym < 12, cformat(%8.2f) trimsupportoverride trimlorel(0.39) force trimhiabs(2.72) by(gs) trimhirel(1.65) ratio(hm) iterate(400)
+Rm420037 @s1 : seldecomp yf (A1: i.a_very_long_variable_name_32char) c.zf (a) [aw=wsm], by(gl) focalgroup("Urban area") contvars(zf 2, focalgroup recut) covariatedetail bayesboot(rseed(60961) percentile reps(6) nodots generate(bw)) fixothermargins sformat(%8.3f) individually
++ Rm420037f1 : seldecomp, covariatedetail cformat(%9.3f)
+Rm420046 @s1 : seldecomp yf c.z big##neg lab_long [pw=w0], by(gm) mincell(5) contvars(z 2, refgroup) sequentially cformat(%9.3f) fixothermargins
++ Rm420046f1 : seldecomp, diagnostics covariatedetail
+Rm420051 @s2 : seldecomp y a, by(g) focalgroup(0) insupport trimhirel(1.73) sequentially ctrltolerance(1e-4) iterate(400)
++ Rm420051f1 : seldecomp
+Rm420058 @t : seldecomp earn x2 [pw=wt] in f/707, by(gs) reverse sequentially fixothermargins
+Rm420060 @t : seldecomp ybin x2 xc##c.x3 x4 ta, by(group) contvars(x3 8) iterate(200) fixothermargins force sequentially trimlorel(0.78) covariatedetail trimfrequency(sometimes) trimhirel(2.46) rev diagnostics
+Rm420064 @t : seldecomp ym (A1: x1 x4) [aw=wt] if id <= 500, by(group) trimfrequency(sometimes) force outcomes(y) pformat(%6.4f) trimhirel(2.55) sequentially bayesboot(nodots citable reps(8) generate(bw) ties percentile rseed(45839)) iterate(100) trimlorel(0.64) trimhiabs(1.83)
+Rm420076 @s2 : seldecomp y i.b [aw=w] if a != 3, by(g) iterate(400) trimhirel(2.01)
+Rm420077 @t : seldecomp ybin x4 x2 x1#ta [pw=wt], iterate(40) by(g3) chain outcomes(y ym) trimloabs(0.6) varlabel trimfrequency(often) trimhiabs(3.43)
+Rm420081 @s1 : seldecomp ym sn a i.d c.zs [aw=wsm], by(gneg) contvars(zs 5) outcom(yb yneg) focalgroup(-1)
+Rm420086 @s1 : seldecomp yneg i.sn big##a_very_long_variable_name_32char c.zf lab_long [pw=w], by(gm) mincell(5) individually contva(zf 2)
++ Rm420086f1 : seldecomp
+Rm420090 @t : seldecomp ym c.x3 xs (geo: i.xj) [iw=wz], by(group) sequentially contvars(x3 5) detail force trimhirel(2.11) iterate(400) fixothermargins
+Rm420093 @s1 : seldecomp ybig d##c.z a_very_long_variable_name_32char [pw=wsm] if inlist(c5, 1, 2, 3, 4), by(gstr) contv(z 2) focalgro("alpha one") varlabels
+Rm420096 @s1 : seldecomp ysml (blk: dec big##c5 b), sequentially fixothermargins by(g4) chain mincell(0)
+Rm420101 @t : seldecomp earn (blk: c.xt) xc [pw=wt] if id <= 500, by(group) contvars(xt 3, recut) bayesboot(reps(10) strata(ta) nodots generate(bw)) iterate(100) bayesboot(rseed(8966) generate(bw) cluster(cm) nodots reps(25)) trimhiabs(2.28) individually covariatedetail generate(rk)
+Rm420105 @t : seldecomp ym xs (x1##c.x3) i.ta if x1 == 1 | x2 == 1, by(group) contvars(x3 5) focalgroup(0) individually
++ Rm420105f1 : seldecomp, diagnostics covariatedetail
+Rm420107 @s1 : seldecomp yb (demo: a_very_long_variable_name_32char c5) (A1: c.z) (blk: i.neg) if zf >= -1.5 & zf < 2, by(gf) contvars(z 4, recut) insupport varlabels bayesboot(nodots reps(8) percentile generate(bw) rseed(30974)) covariatedetail
+Rm420110 @t : seldecomp y c.x3 x2 xc x1##x4 [pw=wt], by(gs) contvars(x3 10) ratio(hm) cformat(%12.0g)
++ Rm420110f1 : seldecomp, diagnostics covariatedetail varlabels
+Rm420119 @s1 : seldecomp yb (geo: dec i.thin c5 neg), by(gf) force generat(rk) sformat(%7.1f) focalgroup(1.5) bayesboot(generate(bw) tinterval cluster(clm) normal reps(6) percentile nodots rseed(5837))
+Rm420121 @t : seldecomp ym (geo: i.xc i.xj), by(group) tol(1e-4) focalgroup(1)
+Rm420122 @t : seldecomp y xs x2 x1 ta##c.x3 if ym < 12 in f/774, generate(rk, replace) by(gs) outcomes(ybin ym) contvars(x3 8, refgroup recut)
+Rm420124 @s1 : seldecomp ysml one##c.zf [iw=wi], by(gf) focalgroup(.5) sequentially detail contvars(zf 2) outcomes(yf)
+Rm420131 @s1 : seldecomp yf (A1: many b) [pw=wf], by(g) bayesboot(nodots normal rseed(90170) generate(bw) cluster(cl) reps(10) citable) fixothermargins level(90) individ sformat(%7.1f)
+Rm420136 @t : seldecomp ym (x2##ta c.xt) [pw=wt], by(g3) chain sequentially contva(xt 8) fixothermargins
++ Rm420136f1 : seldecomp, covariatedetail
+Rm420137 @s1 : seldecomp yb sn##d [pw=w], individually cformat(%12.5g) by(gf) varlabels
++ Rm420137f1 : seldecomp
+Rm420138 @t : seldecomp earn i.x1 x4 [pw=wz] if inrange(x3, -1, 1.5), by(group) ctrltolerance(1e-4) sequentially detail cformat(%12.5g) insupport
++ Rm420138f1 : seldecomp, covariatedetail varlabels
+Rm420146 @s1 : seldecomp yb thin if z > -1, by(gl) cformat(%8.2f) ratio(den0) sequentially varlabels insupport
+Rm420148 @s1 : seldecomp ym (geo: neg##lab_long sm) [iw=w0], force by(gneg) insupport fixothermargins sequentially bayesboot(rseed(71512) nodots tinterval bc normal ties generate(bw) reps(25))
+Rm420149 @t : seldecomp earn i.x2 (c.xt c.x3) (work: x1) [pw=wz], by(g3) contvars(xt 10 x3 10) diagnostics chain
+Rm420158 @s2 : seldecomp y a##b, by(g) fixothermargins reverse sequentially focalgroup(1)
++ Rm420158f1 : seldecomp, diagnostics
+Rm420161 @t : seldecomp ybin x1 [aw=wz] if id <= 500, by(group) bayesboot(rseed(56905) ties nodots reps(6) generate(bw)) diagnostics outcomes(earn) individually pformat(%5.2f) sformat(%8.3f)
++ Rm420161f1 : estat bootstrap, all nolegend
+Rm420165 @t : seldecomp ym x1##x2 i.x4 [pw=wz], by(gs) sequentially generate(rk)
+Rm420171 @s1 : seldecomp yneg (d) (A1: sn) [pw=wf], by(gf) bayesboot(nodots reps(15) normal tinterval rseed(48615) bc generate(bw)) pformat(%6.4f) sformat(%8.3f)
++ Rm420171f1 : seldecomp, covariatedetail
++ Rm420171f2 : estat bootstrap, percentile bc nolegend
+Rm420172 @s1 : seldecomp y (A1: big) (geo: a a_very_long_variable_name_32char) [pw=w0] if !missing(ym), by(g4) individua chain cformat(%9.3x)
+Rm420173 @t : seldecomp ym (geo: ta i.x1) [aw=wz], fix iterate(100) noisily outcomes(earn) individually trimhirel(2.14) trimloabs(0.37) force trimhiabs(1.75) diagnostics by(gs)
+Rm420176 @t : seldecomp ybin (work: xs i.x1) [iw=wz], trimfrequency(once) by(group) insupport force sequentially reverse trimhiabs(2.82)
+Rm420178 @s1 : seldecomp ybig (i.dec c.z) (A1: c.zm lab_long) [pw=w], by(g5) insupport sequentially contvars(zm 3 z 8) varlabels ratio(denm) chain
++ Rm420178f1 : seldecomp, cformat(%9.3f)
++ Rm420178f2 : estat bootstrap
+Rm420185 @s1 : seldecomp ysml (c5 i.b sn) [pw=wi], sequentially reverse by(gf) noisily
++ Rm420185f1 : seldecomp, varlabels cformat(%8.2f)
+Rm420187 @s2 : seldecomp y (geo: b) (c.z) [pw=w] if a != 3, by(g) focalgroup(0) contvars(z 10, pooled)
+Rm420190 @t : seldecomp earn ta x1 x4 [pw=wz], by(gs) sequentia detail reverse focalgroup("beta") diag ratio(hrs)
++ Rm420190f1 : seldecomp
+Rm420194 @s1 : seldecomp yneg c.zf (i.b) [pw=wneg], by(gneg) fixothermargins noisily varlabels contvars(zf 5, pooled)
+Rm420196 @s1 : seldecomp yneg thin a_very_long_variable_name_32char [iw=wf], trimhiabs(4) by(g5) chain sequentially iterate(40)
++ Rm420196f1 : seldecomp, diagnostics covariatedetail
+Rm420208 @s1 : seldecomp yneg i.dec, by(gstr) generate(rk) ctrltolerance(1e-4)
++ Rm420208f1 : seldecomp, diagnostics varlabels cformat(%9.3f)
+Rm420210 @s1 : seldecomp yneg i.one [aw=wsm], fixothermargins sequentially cformat(%9.2e) focalgroup(1) by(gm) ratio(denm) trimfrequency(once)
+Rm420212 @s1 : seldecomp yf (geo: i.sn big) [pw=wsm], individu covariatedetail cformat(%9.2e) fixothermargins by(gm)
++ Rm420212f1 : seldecomp, diagnostics
+Rm420216 @t : seldecomp ym ta x1, by(g3) chain trimfrequency(often) force trimhiabs(3.48)
+Rm420220 @t : seldecomp ybin x1 xc ta##x2 [aw=wz], focalgr("beta") sequentially trimhirel(2.19) trimloabs(0.59) by(gs) force iterate(400) trimlorel(0.43)
+Rm420223 @t : seldecomp earn (ta) x2 [pw=wz], trimlorel(0.37) focalgroup(0) outcomes(ybin) trimloabs(0.71) sequentially by(group) trimfrequency(often)
+Rm420232 @t : seldecomp y x4 [pw=wt], by(group) detail cformat(%12.0g) focalgroup(1) trimlorel(0.9) force sequentially reverse
+Rm420234 @t : seldecomp ybin x4 i.xs, by(gs) ratio(hm) generate(rk, replace) sequentially fixoth cformat(%12.0g)
+Rm420235 @s1 : seldecomp ysml a_very_long_variable_name_32char [aw=wi], by(g5) trimlorel(3) trimhirel(2) force iterate(5) varlabels chain
+Rm420244 @t : seldecomp y xj c.x3 (i.ta x1) [pw=wt], by(gs) trimhiabs(2.92) trimloabs(0.44) trimlorel(0.65) seq trimfrequency(sometimes) mincell(100) focalgroup("beta") reverse contvars(x3 10, pooled) force iterate(100)
+Rm420245 @s1 : seldecomp yneg (geo: neg cmv many a) [pw=w], sequentially by(g4) chain varlabels
+Rm420250 @t : seldecomp ym xs xc i.ta [pw=wt], by(group) fixothermargins force generate(rk) varlabels insuppor individually
+Rm430011 @t : seldecomp y x2 [aw=wz] if id > 300 & id <= 1700, by(g3) chain diagnostics
+Rm430012 @s1 : seldecomp yneg d lab_long##c5 i.many [iw=wbig] in f/425, covariatedetail fixothermargins individually by(gstr) force
++ Rm430012f1 : seldecomp, diagnostics varlabels cformat(%9.3f)
+Rm430013 @t : seldecomp ym x1 i.ta c.xt [pw=wz], trimfrequency(often) ratio(hrs) trimhirel(2.33) iterate(400) contvar(xt 5) by(gs) trimlorel(0.58) varlabels force trimhiabs(2.43)
++ Rm430013f1 : seldecomp, varlabels
+Rm430015 @s1 : seldecomp yb a_very_long_variable_name_32char i.lab_long a [pw=w0], trimloabs(0.73) trimfreq(once) detail trimlorel(0.65) reverse sequentially by(gf) iterate(400) trimsupportoverride trimhirel(1.37)
+Rm430029 @s1 : seldecomp ysml (blk: big lab_long##c.zm) [pw=wm], generate(rk) sequentially contvars(zm 10) tolerance(1e-12) by(g) reverse
++ Rm430029f1 : seldecomp, diagnostics
+Rm430032 @s2 : seldecomp y i.b c.z i.a [iw=w], by(g) contvars(z 4, pooled) swap
+Rm430036 @t : seldecomp ybin i.x2 [pw=wt], by(gs) sequentiall detail ctrltolerance(1e-9) diagnost
++ Rm430036f1 : seldecomp, diagnostics varlabels
+Rm430037 @t : seldecomp y i.x4 x1 [pw=wz], by(group) sequentially generate(rk, replace) reverse
++ Rm430037f1 : seldecomp, diagnostics covariatedetail
+Rm430040 @t : seldecomp y i.x2 ta x1 xs if ym >= 3 & x4 != "west", by(g3) trimfrequency(sometimes) chain mincell(1) iterate(200) trimhirel(2.22) force
+Rm430045 @t : seldecomp ym (geo: x2 x1##x4) if id <= 500, sequential chain bayesboot(rseed(79511) reps(10) normal ties nodots generate(bw)) by(g3) covariatedetail
+Rm430052 @t : seldecomp earn x4 [pw=wz], ctrltolerance(1e-4) by(group) generate(rk)
++ Rm430052f1 : seldecomp, varlabels
+Rm430053 @s1 : seldecomp yneg i.b sn, by(gl) cformat(%12.0g) ratio(denm) level(90) fixothermargins focalgroup(2) pformat(%5.2f) bayesboot(nodots rseed(24633) reps(25) generate(bw)) sequentia diagnostics
+Rm430056 @s1 : seldecomp ym c.zf c5##b a_very_long_variable_name_32char [pw=w], by(gstr) rever force contvars(zf 5) sequentially
++ Rm430056f1 : seldecomp, covariatedetail
++ Rm430056f2 : estat bootstrap, all nolegend verbose
+Rm430062 @t : seldecomp ym ta [pw=wt], fixothermargins bayesboot(reps(1) nodots generate(bw)) individually by(group) minc(1)
+Rm430065 @s1 : seldecomp ybig d a many, by(gneg) individually focalgroup(-1) varlabels outcomes(ym)
+Rm430067 @t : seldecomp y x2 (demo: i.x4) xc [pw=wt], by(group) sequentially fixothermargins reverse diagnostics
++ Rm430067f1 : seldecomp, covariatedetail
+Rm430074 @s1 : seldecomp yneg c.zf (blk: d) [pw=wbig], cformat(%7.1f) contvars(zf 3) outcomes(ysml) by(gstr) generate(rk)
++ Rm430074f1 : seldecomp, covariatedetail
+Rm430077 @t : seldecomp earn xc (x4#ta) [iw=wt], ctrltolerance(1e-9) iterate(40) individually trimlorel(0.74) force by(gs) cformat(%7.1f) generate(rk) fixothermargins
++ Rm430077f1 : seldecomp, varlabels
+Rm430091 @t : seldecomp y (c.x3 ta) if id <= 500, by(group) individually sformat(%8.3f) mincell(0) bayesboot(ties generate(bw) nodots bc cluster(cluster) bca rseed(60146) reps(15)) contvars(x3 10)
++ Rm430091f1 : seldecomp, citable
++ Rm430091f2 : estat bootstrap, bca
+Rm430096 @s2 : seldecomp y (a) (A1: b) (geo: c.z) [aw=w], by(g) reve sequentially contvars(z 4) fixothermargins
+Rm430098 @t : seldecomp ym x1 c.x3 [pw=wz], by(gs) contvars(x3 4) ctrltolerance(1e-3) noisily ratio(hrs)
+Rm430099 @t : seldecomp y (x1#x2 c.x3) (geo: xc) in 142/l, sequentially reverse by(group) cformat(%12.5g) contvars(x3 10, focalgroup)
++ Rm430099f1 : seldecomp, diagnostics varlabels
+Rm430106 @s1 : seldecomp ysml c.zt d many [pw=w0], trimhirel(1.32) force by(gneg) contvars(zt 8, focalgroup) trimfrequency(often) seq
+Rm430107 @s1 : seldecomp yb c.zf big sm c.zs [aw=wf] if !missing(ym), by(gneg) sequ contvars(zf 8 zs 10) ratio(denm) covariatedetail outcomes(yf) fixothermargins
+Rm430111 @s1 : seldecomp yb a neg ro [pw=w], by(gm) bayesboot(rseed(43353) generate(bw) level(99.5) reps(8) nodots ties) outcomes(ym)
+Rm430115 @s1 : seldecomp yc (geo: ro d) [pw=w], by(gstr) swap
+Rm430119 @t : seldecomp ybin x2 xs ta#x1 [pw=wt] if id <= 500, by(group) sequentially fixothermargins force trimlorel(0.72) bayesboot(rseed(82363) clu(cluster) level(90) re(25) generate(bw) nodots) insupport pformat(%5.2f) trimhiabs(3.11) ctrltolerance(1e-9) generate(x4)
+Rm430124 @s1 : seldecomp yneg thin##c.zm c5 i.big, by(gf) contvars(zm 5) insupport det cformat(%12.5g) sequentially
++ Rm430124f1 : seldecomp, varlabels
+Rm430125 @t : seldecomp earn (work: c.xt x4 xs##c.x3) if id <= 500, trimhiabs(3.64) trimloabs(0.27) sequentially bayesboot(nodots bca rseed(78274) reps(25) generate(bw)) by(gs) force contvars(x3 2 xt 5) tolerance(0)
+Rm430126 @s1 : seldecomp ybig (blk: i.lab_long c.zs c.zt i.thin) [iw=wf], by(gneg) diagnostics sequentially contvars(zs 3 zt 10)
+Rm430131 @s1 : seldecomp ybig (blk: c.zs sn) [pw=wbig], by(gm) focalgroup(1) individually contvars(zs 8) mincell(5) fixothermargins
+Rm430132 @s1 : seldecomp yb dec##a if z > -1, by(gstr) by(nosuchvar) iterate(200) sequentially trimfreq(often) varlabels trimhiabs(3.36)
+Rm430140 @t : seldecomp earn c.xt x2 i.xc i.x1 ta, by(gs) outcomes(y ybin) contvars(xt 3) cformat(%8.2f) focalgroup("alpha")
++ Rm430140f1 : seldecomp, diagnostics cformat(%12.0g)
+Rm430150 @t : seldecomp ym c.xt x2 i.xc c.x3 [pw=wz], by(gs) sequenti force focalgroup("alpha") varlabels cont(x3 4 xt 8) trimhirel(2) trimlorel(0.92) generate(rk) trimhiabs(3.4) ctrltolerance(1e-3) iterate(400) deta
+Rm430152 @t : seldecomp y x2#ta c.xt x4 i.x1 if x4 != "east", by(gs) contvars(xt 2) ctrltolerance(1e-3)
+Rm430155 @s2 : seldecomp y b a [pw=w], by(g) fixothermargins diagnostics insupport trimlorel(0.43) trimhirel(2.84) sequentially force
++ Rm430155f1 : seldecomp, covariatedetail
+Rm430158 @s1 : seldecomp ysml thin sm neg##c.zm [aw=wf], by(gf) sequentially reverse contvars(zm 4)
++ Rm430158f1 : seldecomp
+Rm430160 @t : seldecomp earn xs##c.xt x4 x1 [pw=wz] if inrange(x3, -1, 1.5), by(gs) force iterate(40) trimloabs(0.34) trimlorel(0.65) sequentially fix reverse contva(xt 8, pooled) outcomes(ym ybin) trimhirel(2.64) detail
+Rm430161 @s1 : seldecomp yf (A1: sm cmv c.zt d c.zf a_very_long_variable_name_32char), reverse generate(rk) by(g) contvars(zt 3 zf 10) sequentially focalgroup(0)
++ Rm430161f1 : seldecomp, diagnostics covariatedetail
+Rm430162 @s1 : seldecomp yneg c5##c.zs (A1: dec d) i.big if !missing(ym), by(gf) sformat(%7.1f) focalg(.5) contvars(zs 5, refgroup) bayesboot(rseed(78672) nodots generate(bw) tinterval normal bca reps(10) cit) outcomes(ybig ysml) sequentially
+Rm430164 @t : seldecomp earn (A1: x2 x4#ta), by(gs) fixothermargins individually covariatedetail varlabels cformat(%9.3f)
++ Rm430164f1 : seldecomp, varlabels cformat(%8.2f)
+Rm430182 @t : seldecomp y x4##c.xt (blk: xs) [pw=wt], diagnostics contvars(xt 3) by(group) sequentially fixothermargins
+Rm430191 @s2 : seldecomp y c.z b i.a [iw=w], iterate(200) contvars(z 3) sequentially chain by(g3) trimhirel(1.12) fixothermargins trimlorel(0.35) force trimhiabs(2.82)
++ Rm430191f1 : seldecomp, covariatedetail varlabels
+Rm430196 @t : seldecomp ybin i.xr [aw=wt], by(g3) sequentially fixothermargins chain
++ Rm430196f1 : seldecomp, diagnostics varlabels cformat(%12.0g)
+Rm430198 @s1 : seldecomp yb a_very_long_variable_name_32char#lab_long b sm##c.z [pw=wi], by(gm) contvars(z 10, pooled) sequentially fixothermargins generate(rk) detail
++ Rm430198f1 : seldecomp, varlabels
+Rm430199 @s1 : seldecomp yf i.thin if !missing(ym), by(g) tolerance(1e-10) sequentially pooled reverse diagnostics
+Rm430210 @t : seldecomp y i.xs [pw=wz] if id > 300 & id <= 1700, by(g3) iterate(40) fixothermargins sequentially trimhirel(1.27) force chain
+Rm430216 @s1 : seldecomp ym (work: c.z) b##dec [pw=wm], force contvars(z 10) sequentially detail trimhirel(1.52) by(gneg) diagnostics
+Rm430219 @s1 : seldecomp yf (work: i.one a) [pw=wm], by(gstr) fixothermargins toleranc(1e-10) sequentially outcomes(ysml)
+Rm430224 @s1 : seldecomp ysml (fo sm lab_long) [pw=w0], by(gneg) diag pformat(%6.4f) bayesboot(generate(bw) percentile rseed(92238) reps(12) normal nodots) outcomes(yf) varlabels insupport individually
++ Rm430224f1 : estat bootstrap
+Rm430225 @t : seldecomp y x1##x4 x2 [pw=wt], mincell(25) diagnostics by(group)
+Rm430228 @s1 : seldecomp yneg b one if id <= 450, by(gm) ratio(den0) focalgroup(0) generate(rk, replace) tolerance(1e-10) sequentially fixothermargins
+Rm430229 @s1 : seldecomp yf cmv dec b#d [pw=wsm] if many <= 30, by(gstr) sequentially individually focalgroup("beta two")
+Rm430235 @s1 : seldecomp yb neg big [pw=wm] if !missing(ym), by(gf) trimhirel(2.93) insupport individually force fixothermargins itera(100) bayesboot(level(50) citable bca reps(15) bc cluster(clm) nodots normal rseed(18919) generate(bw))
++ Rm430235f1 : estat bootstrap, nolegend
+Rm430242 @s1 : seldecomp ybig a_very_long_variable_name_32char#b [pw=w0], by(gneg) individually covariate outcomes(yf) fixothermargins
+Rm430244 @s1 : seldecomp y a_very_long_variable_name_32char##dec [aw=w], sequentially by(gstr) diagnostics
+Rm430246 @s1 : seldecomp ysml i.fo a big c.zs many if id <= 450, by(gm) reverse cformat(%9.2e) sequentially contvars(zs 8)
++ Rm430246f1 : seldecomp, varlabels
+Rm430247 @s1 : seldecomp y (d big), by(gm) trimhiabs(1.63) force trimlorel(0.54) trimhirel(2) iterate(400)
++ Rm430247f1 : seldecomp, covariatedetail varlabels
+Rm430249 @s1 : seldecomp ym fo##c.zf, by(gneg) contvars(zf 2) diagnostics individual
+Rm430250 @s1 : seldecomp y0 c5 a_very_long_variable_name_32char dec [pw=wm], by(g4) sequentially trimfrequency(once) trimhirel(2.57) iter(400) force chain
+Rb450006 @s1 : seldecomp ym sn##c.z [pw=wsm], by(g4) bayesboot(generate(bw) nodots citable normal rseed(33380) bc cluster(clm) reps(20) level(99.5)) contvars(z 5, recut) vce(bootstrap) sequentially trimhirel(1.94) chain trimlorel(0.8) trimfrequency(often) force iterate(400)
+Rb450007 @s1 : seldecomp ym (blk: sn##d b) (work: c.zm) [pw=w], by(g5) bayesboot(generate(bw) cluster(cls) percentile nodots rseed(44266) reps(12)) sequentially contvars(zm 5, recut) chain nosuchoption fixothermargins sformat(%8.3f)
+Rb450013 @t : seldecomp earn i.x4 xs i.ta [pw=wz] if id <= 500, by(group) individually bayesboot(reps(15) percentile bca level(99) cluster(cm) generate(bw) nodots tinterval ties rseed(18376)) fixot
++ Rb450013f1 : seldecomp, citable
++ Rb450013f2 : estat bootstrap, verbose
+Rb450020 @s1 : seldecomp ysml d, bayesboot(generate(bw) reps(12) percentile cluster(cls) nodots normal rseed(28464) bc bca) by(gl) sformat(%7.1f) covariatedetail
++ Rb450020f1 : seldecomp, varlabels citable
++ Rb450020f2 : estat bootstrap, percentile nolegend
+Rb450029 @s1 : seldecomp y a_very_long_variable_name_32char##lab_long i.a [pw=wm], by(gm) sequentially trimsupportoverride force outcomes(ym ysml) bayesboot(rseed(65099) cluster(clm) nodots reps(20) ties citable tinterval generate(bw) normal) fixothermargins focalgroup(0) trimlorel(0.54)
+Rb450055 @t : seldecomp earn c.xt x1 x2 i.xs i.ta if id <= 500, contv(xt 10) pformat(%5.2f) trimloabs(-1) bayesboot(bca generate(bw) reps(20) ties nodots rseed(86893)) sequentially reverse by(gs) diagnostic
+Rb450066 @s1 : seldecomp ybig (A1: c.zm i.many) (sn) [aw=wsm], bayesboot(20) insupp by(gl) contvars(zm 3, focalgroup) bayesb(generate(bw) rseed(45058) reps(25) nodots)
+Rb450076 @s1 : seldecomp y sm c.z c5 c.zm [pw=wbig], by(g) force individually trimfrequency(sometimes) iterate(40) fixothermargins covariatedetail trimhirel(1.3) bayesboot(percentile generate(bw) tinterval nodots rseed(73658) reps(10)) contvars(zm 10 z 3) trimlorel(0.74)
+Rb450083 @s1 : seldecomp ym a, by(gneg) insupport sformat(%8.3f) bayesboot(tinterval nodots reps(12) normal rseed(10755) cluster(clm) bca generate(bw)) individually fixothermargins
++ Rb450083f1 : estat bootstrap, normal bc nolegend
+Rb450086 @s1 : seldecomp yf sn c.zf [pw=wbig], by(g) contvars(zf 2) focalgroup(0) bayesboot(nodots ties reps(20) citable rseed(96405) generate(bw) bca) sformat(%7.1f) generate(rk)
++ Rb450086f1 : seldecomp, cformat(%12.0g)
+Rb450114 @s1 : seldecomp yf neg (c.zf) (work: lab_long c.zs) [iw=wf], by(gstr) fixothermargins sequentially outcomes(yneg) bayesboot(reps(25) tinterval bc rseed(80021) citable nodots generate(bw) percentile) contvars(zs 2 zf 10) tolerance(1e-6) pformat(%5.2f)
++ Rb450114f1 : estat bootstrap, percentile
+Rb450124 @s1 : seldecomp yf (blk: c.zm i.a_very_long_variable_name_32char a i.neg) [aw=wsm], by(gneg) reverse fixothermargins diagnostics bayesboot(citable reps(20) rseed(50388) nodots generate(bw)) sequentially detail contvars(zm 3, recut) pformat(%5.2f)
+Rb450171 @s1 : seldecomp ybig (A1: c5 thin neg i.cmv) [pw=wsm], by(gstr) sformat(%8.3f) noisi sequentially bayesboot(generate(bw) nodots cluster(cl1) rseed(54848) citable ties reps(15))
++ Rb450171f1 : estat bootstrap
+Rb450176 @s1 : seldecomp yf sn lab_long [pw=wsm] if inlist(c5, 1, 2, 3, 4), by(g5) chain contvars(nosuch 3) sequentially cformat(%12.0g) bayesboot(level(80) bca nodots cluster(cl) rseed(86075) generate(bw) reps(15))
+Rb450187 @s1 : seldecomp ym fo [pw=wi], mincell(25) insupport pformat(%5.2f) reverse bayesboot(clu(cl) bca nodots rseed(59922) generate(bw) normal reps(25)) by(gstr) sequentially force
+Rb450196 @t : seldecomp earn i.xc i.x1 if id <= 500, by(group) pformat(%5.2f) bayesboot(tinterval normal generate(bw) reps(10) bca lev(99) rseed(76781) nodots citable bc) sequentially outcomes(y)
++ Rb450196f1 : seldecomp, covariatedetail citable
+Ry360001 @s2 : seldecomp y a [pw=w], trimloabs(0.46) bayesboot(nodots rseed(95336) citable cluster(cl) reps(12) generate(bw) tinterval) force by(g) iterate(100) sequentially noisily trimhiabs(2.56)
++ Ry360001f1 : seldecomp, level(90) citable
+Ry360004 @s2 : seldecomp y (A1: i.a) c.z if id <= 34, contvars(z 4, recut) trimfrequency(sometimes) force varlabels by(g) trimhiabs(1.87) mincell(100) iterate(200) bayesboot(tinterva reps(12) rseed(65038) nodots generate(bw)) fixothermargins sequentially covariatedetail trimhirel(2.22)
+Ry360005 @s2 : seldecomp y b c.z, by(g) fixothermargins sequentially ctrltolerance(.01) contvars(z 2, focalgroup) ratio(w)
+Ry360011 @s2 : seldecomp y (geo: b##a c.z) [pw=w] if a != 3, by(g) contvar(z 5) fixothermargins iterate(40) mincell(5) trimlorel(0.51) individually force
+Ry360014 @s2 : seldecomp y i.b a [pw=w], sequentially by(g) iterate(2) force reverse detail
+Ry360016 @s2 : seldecomp y i.a b [pw=w] if id <= 34, by(g3) sequentially fixothermarg chain bayesbo(rseed(9872) nodots generate(bw) reps(6))
+Ry360018 @s2 : seldecomp y (a b) [pw=w], detail bayes(generate(bw) bca normal nodots rseed(22900) reps(25) cluster(cl) ties) reverse sequentially varlabels trimhirel(1.48) iterate(40) trimhiabs(2.03) force by(g)
++ Ry360018f1 : estat bootstrap
+Ry360028 @s2 : seldecomp y a [pw=w], by(g3) fixothermargins varlabe sequentially diagn chain mincell(25)
+Ry360044 @s2 : seldecomp y (demo: a) (A1: i.b) [pw=w], by(g) trimhirel(1.33) iterate(100) trimhiabs(2.55) force diagnostics covariatedetail
++ Ry360044f1 : seldecomp
+Ry360046 @s2 : seldecomp y b##a, by(g) varlabels force trimhirel(2.7) detai trimlorel(0.33) bayesboot(generate(bw) reps(8) rseed(946) citable nodots cluster(cl)) reverse pformat(%6.4f) iterate(40) trimfrequency(once) sequentially
++ Ry360046f1 : seldecomp, diagnostics level(99) citable
+Ry360052 @s2 : seldecomp y i.b [aw=w], by(g) varlabels reverse sequentially ctrltolerance(1e-4) generate(rk)
++ Ry360052f1 : seldecomp, cformat(%9.3f)
+Ry360054 @s2 : seldecomp y a b, sequentially bayesboot(cluster(cl) percentil rseed(53037) generate(bw) tinter nodots reps(12)) noisily chain by(g3) sformat(%8.3f)
++ Ry360054f1 : seldecomp, level(80)
++ Ry360054f2 : estat bootstrap, nolegend
+Ry360059 @s2 : seldecomp y b a [pw=w], by(g) fixothermargin cformat(%12.5g) reverse varlabels sequentially
++ Ry360059f1 : seldecomp, diagnostics
+Ry360066 @s2 : seldecomp y a##b [pw=w] in 36/l, by(g3) ratio(w) chain sequentially
+Ry360074 @s2 : seldecomp y (work: c.z) (geo: a) [pw=w] if z > -1.5, indi bayesboot(reps(15) nodots rseed(26648) generate(bw) level(80)) by(g) diagnostics pformat(%5.2f) contvars(z 2, focalgroup recut)
++ Ry360074f1 : seldecomp, diagnostics covariatedetail
++ Ry360074f2 : estat bootstrap, bc
+Ry360080 @s2 : seldecomp y (a c.z) if z > -1.5, trimhirel(1.53) force chain contvars(z 3) by(g3) trimhiabs(1.67) trimloabs(0.34)
+Ry360082 @s2 : seldecomp y (A1: b a) [pw=w], by(g) bayesboot(cluster(cl) ties reps(8) nodots generate(bw) percentile rseed(91294)) pformat(%6.4f) generate(rk, replace) level(90)
+Ry360083 @s2 : seldecomp y a [pw=w], by(g3) sequentially trimhiabs(2.14) insupp chain fixothermargins iterate(200) force
+Ry360091 @s2 : seldecomp y a##b [pw=w], by(g) focalgroup(0) generate(rk, replace) insupport
++ Ry360091f1 : seldecomp, diagnostics covariatedetail cformat(%12.0g)
+Ry360092 @s2 : seldecomp y b a [pw=w], by(g) detail reverse generate(rk) sequentially
+Ry360097 @s2 : seldecomp y (b c.z) [pw=w] if a != 3, by(g) detail varlabels fixothermargins sequentially generate(rk) bayesboot(cluster(cl) re(6) rseed(42030) nodots citable generate(bw)) contvars(z 4) pformat(%5.2f) sformat(%8.3f)
+Ry360101 @s2 : seldecomp y a##c.z, by(g) contvars(z 2) sequent insup
+Ry360103 @s2 : seldecomp y i.a [pw=w], ctrltole(1e-9) by(g) individually fixothermargins
+Ry360106 @s2 : seldecomp y a b [pw=w], by(g) ind insupport ctrltolerance(1e-9)
+Ry360108 @s2 : seldecomp y i.b [iw=w], by(g) varlabels ctrltolerance(1e-4) force fixothermargins individually bayesboot(rseed(9667) normal percentile reps(12) generate(bw) nodots level(50)) iterate(200) trimhiabs(2.49)
+Ry360109 @s2 : seldecomp y b [aw=w] if z > -1.5, iterate(12) fixothermargins force sequentially reverse insupport by(g)
+Ry360110 @s2 : seldecomp y b a [pw=w], by(g) iterate(40) focalgroup(1) trimhirel(1.36) force
+Ry360114 @s2 : seldecomp y (b i.a) [pw=w] if z > -1.5, by(g) diagnostics force sequentially trimlorel(0.33)
+Ry360119 @s2 : seldecomp y b [pw=w], by(g) force detail itera(12) sequentially cformat(%9.2e)
+Qa001 @s2 : seldecomp y a, by(g) xyz
+Qa002 @s2 : seldecomp y a, by(g) xyz(1)
+Qa003 @s2 : seldecomp y a, by(g) sequentially(1)
+Qa004 @s2 : seldecomp y a, by(g) focalgroup
+Qa006 @s2 : seldecomp y a, by(g) iterate(abc)
+Qa009 @s2 : seldecomp y a, by(g) mincell(-1)
+Qa010 @s2 : seldecomp y a, by(g) mincell(2.5)
+Qa011 @s2 : seldecomp y a, by(g) ratio(nosuch)
+Qa012 @s2 : seldecomp y a, by(g) ratio(z w)
+Qa014 @s2 : seldecomp y a, by(g) outcomes(nosuch)
+Qa016 @s2 : seldecomp y a, by(nosuch)
+Qa017 @s2 : seldecomp y a, by(g a)
+Qa018 @s2 : seldecomp y a, by()
+Qa022 @s2 : seldecomp , by(g)
+Qa024 @s2 : seldecomp y a, by(g) sequentially sequentially
+Qa025 @s2 : seldecomp y a, by(g) ratio(z) ratio(w)
+Qa027 @s2 : seldecomp y a, by(g) iterate(5) iterate(6)
+Qa028 @s2 : seldecomp y a, by(g) SEQUENTIALLY
+Qa030 @s2 : seldecomp y a, by(g) Seq
+Qa035 @s2 : seldecomp y a [fw=w], by(g)
+Qa040 @s2 : seldecomp y a [pw w], by(g)
+Qa043 @s2 : seldecomp y a in 0/20, by(g)
+Qa047 @s2 : seldecomp y a if, by(g)
+Qa048 @s2 : seldecomp y a if nosuch > 1, by(g)
+Qa051 @s2 : seldecomp y a [pw=w] [aw=w], by(g)
+Qa052 @s2 : seldecomp y a by(g)
+Qa053 @s2 : seldecomp y a by(g), sequentially
+Qa054 @s2 : seldecomp y a sequentially, by(g)
+Qa055 @s2 : seldecomp y a if z > 0 by(g)
+Qa056 @s2 : seldecomp y a focalgroup(1), by(g)
+Qa057 @s2 : seldecomp y a sequentially force, by(g)
+Qa058 @s2 : seldecomp y a seq by(g)
+Qa060 @s2 : seldecomp y a, by(g) swap focalgroup(1)
+Qa061 @s2 : seldecomp y a, by(g) weight(0)
+Qa062 @s2 : seldecomp y a, by(g) weight(1)
+Qa063 @s2 : seldecomp y a, by(g) weight(0.5)
+Qa066 @s2 : seldecomp y a, by(g) vce(jack)
+Qa067 @s2 : seldecomp y a, by(g) vce(cluster cl)
+Qa068 @s2 : seldecomp y a, by(g) vce(robust)
+Qa070 @s2 : seldecomp y a, by(g) reps(100)
+Qa071 @s2 : seldecomp y a, by(g) rseed(1)
+Qa072 @s2 : seldecomp y a, by(g) seed(1)
+Qa073 @s2 : seldecomp y a, by(g) cluster(cl)
+Qa074 @s2 : seldecomp y a, by(g) bca
+Qa075 @s2 : seldecomp y a, by(g) ties
+Qa076 @s2 : seldecomp y a, by(g) nodots
+Qa077 @s2 : seldecomp y a, by(g) dots
+Qa079 @s2 : seldecomp y a, by(g) citable
+Qa080 @s2 : seldecomp y a, by(g) normal tint perc bc
+Qa082 @s2 : seldecomp y a, by(g) recut
+Qa083 @s2 : seldecomp y c.z, by(g) contvars(z 3) recut
+Qa084 @s2 : seldecomp y c.z, by(g) contvars(z 3, focalgroup) recut
+Qa085 @s2 : seldecomp y a, by(g) replace
+Qa086 @s2 : seldecomp y a, by(g) generate(rk) replace
+Qa087 @s2 : seldecomp y a, by(g) generate(rk, x) replace
+Qa088 @s2 : seldecomp y a, by(g) reps(10) rseed(5) bca
+Qa089 @s2 : seldecomp y a, by(g) bayesboot(reps(5) nodots generate(bw)) reps(10)
+Qa090 @s2 : seldecomp y a, by(g) nodiagnostics
+Qa092 @s2 : seldecomp y a, by(g) nodi
+Qa093 @s2 : seldecomp y a, by(g) bayesboot(20)
+Qa095 @s2 : seldecomp y a, by(g) bayesboot(strata(a) nodots generate(bw))
+Qa096 @s2 : seldecomp y a, by(g) bayesboot(seed(1) nodots generate(bw))
+Qa097 @s2 : seldecomp y a, by(g) bayesboot(xyz nodots generate(bw))
+Qa098 @s2 : seldecomp y a, by(g) bayesboot(reps(abc) nodots generate(bw))
+Qa100 @s2 : seldecomp y a, by(g) bayesboot(dots(-1) generate(bw))
+Qa101 @s2 : seldecomp y a, by(g) bayesboot(rseed(1.5) nodots generate(bw))
+Qa102 @s2 : seldecomp y a, by(g) bayesboot(rseed(-1) nodots generate(bw))
+Qa104 @s2 : seldecomp y a, by(g) bayesboot(level(5) nodots generate(bw))
+Qa105 @s2 : seldecomp y a, by(g) bayesboot(level(abc) nodots generate(bw))
+Qa106 @s2 : seldecomp y a, by(g) bayesboot(cluster(nosuch) nodots generate(bw))
+Qa107 @s2 : seldecomp y a, by(g) bayesboot(cluster(a b) nodots generate(bw))
+Qa108 @s2 : seldecomp y a, by(g) bayesboot(nodots generate(1x))
+Qa115 @s2 : seldecomp y c.z, by(g) contvars(z)
+Qa116 @s2 : seldecomp y c.z, by(g) contvars(z 1)
+Qa119 @s2 : seldecomp y c.z, by(g) contvars(z 3 z 4)
+Qa120 @s2 : seldecomp y c.z, by(g) contvars(z 3, foo)
+Qa121 @s2 : seldecomp y c.z, by(g) contvars(z 3, pooled focalgroup)
+Qa122 @s2 : seldecomp y c.z, by(g) contvars(z 3 recut)
+Qa123 @s2 : seldecomp y c.z, by(g) contvars(recut)
+Qa126 @s2 : seldecomp y c.z, by(g) contvars(, recut)
+Qa127 @s2 : seldecomp y c.z, by(g) contvars()
+Qa128 @s2 : seldecomp y z, by(g) contvars(z 3)
+Qa130 @s2 : seldecomp y a, by(g) contvars(z 3)
+Qa131 @s1 : seldecomp y c.sn, by(g) contvars(sn 3)
+Qa132 @s1 : seldecomp y c.sn, by(g) contvars(a 3)
+Qa133 @s2 : seldecomp y c.z, by(g) contvars(z 3 a)
+Qa135 @s2 : seldecomp y (a b, by(g)
+Qa136 @s2 : seldecomp y (), by(g)
+Qa137 @s2 : seldecomp y (: a), by(g)
+Qa138 @s2 : seldecomp y (1x: a), by(g)
+Qa139 @s2 : seldecomp y (a b: a), by(g)
+Qa141 @s2 : seldecomp y a a, by(g)
+Qa142 @s2 : seldecomp y a#b b#a, by(g)
+Qa144 @s2 : seldecomp y ib1.a, by(g)
+Qa145 @s2 : seldecomp y ib(first).a, by(g)
+Qa146 @s2 : seldecomp y L.a, by(g)
+Qa147 @s2 : seldecomp y a#, by(g)
+Qa148 @s2 : seldecomp y #a, by(g)
+Qa149 @s2 : seldecomp y nosuch, by(g)
+Qa150 @s2 : seldecomp y.x a, by(g)
+Qa151 @s2 : seldecomp nosuch a, by(g)
+Qa153 @s1 : seldecomp sn a, by(g)
+Qa154 @s2 : seldecomp y, by(g)
+Qa155 @s2 : seldecomp y y, by(g)
+Qa156 @s2 : seldecomp y a, by(g) outcomes(y)
+Qa157 @s2 : seldecomp y a, by(g) outcomes(z z)
+Qa158 @s1 : seldecomp y a, by(g) outcomes(sn)
+Qa159 @s2 : seldecomp y a z, by(g) outcomes(z)
+Qa160 @s2 : seldecomp y a g, by(g)
+Qa161 @s2 : seldecomp y (k: a) (k: b), by(g) sequentially
+Qa162 @s2 : seldecomp y (overall: a) b, by(g) sequentially
+Qa163 @s2 : seldecomp y (_remainder: a) b, by(g) individually
+Qa164 @s2 : seldecomp y (a b) (a#b), by(g) sequentially fixothermargins
+Qa165 @s2 : seldecomp y (k: a a#b), by(g) sequentially fixothermargins detail
+Qa167 @s2 : seldecomp y a b, by(g) individually reverse
+Qa168 @s2 : seldecomp y a b, by(g) individually detail
+Qa171 @s2 : seldecomp y a b, by(g) reverse
+Qa172 @s2 : seldecomp y a b, by(g) detail
+Qa173 @s2 : seldecomp y a b, by(g3) chain focalgroup(1)
+Qa178 @s2 : seldecomp y a b, by(g) tolerance(abc)
+Qa182 @s2 : seldecomp y a b, by(g) ctrltolerance(x)
+Qa183 @s2 : seldecomp y a b, by(g) trimhirel(0)
+Qa184 @s2 : seldecomp y a b, by(g) trimhirel(abc)
+Qa187 @s2 : seldecomp y a b, by(g) trimhiabs(1) trimloabs(1)
+Qa188 @s2 : seldecomp y a b, by(g) trimhirel(2) trimfrequency(foo)
+Qa191 @s2 : seldecomp y a b, by(g) trimsupportoverride
+Qa195 @s2 : seldecomp y a b, by(g) generate(a b)
+Qa199 @s2 : seldecomp y a b, by(g) generate(1x)
+Qa200 @s2 : seldecomp y a b, by(g) generate(y)
+Qa201 @s2 : seldecomp y a b, by(g) generate(g)
+Qa202 @s2 : seldecomp y a b, by(g) generate(a)
+Qa203 @s2 : seldecomp y a b [pw=w], by(g) generate(w)
+Qa204 @s2 : seldecomp y a b, by(g) generate(z)
+Qa205 @s2 : seldecomp y a b, by(g) generate(cl)
+Qa208 @s2 : seldecomp y a b, by(g) pformat(abc)
+Qa209 @s2 : seldecomp y a b, by(g) sformat(%9s)
+Qa212 @s2 : seldecomp y a b, by(g) focalgroup(2)
+Qa213 @s2 : seldecomp y a b, by(g) focalgroup(abc)
+Qa216 @s1 : seldecomp y a b, by(gl) focalgroup(Urban)
+Qa217 @s1 : seldecomp y a b, by(gl) focalgroup(3)
+Qa218 @s1 : seldecomp y a b, by(gstr) focalgroup(alpha)
+Qa221 @s2 : seldecomp y a b if g == 0, by(g)
+Qa223 @s2 : seldecomp y a b if z > 100, by(g)
+Qa246 @s1 : seldecomp y a b, by(gstr) chain
+Qa248 @s2 : seldecomp y a, by(g) Sequentially
+Qa249 @s2 : seldecomp y a [Pw=w], by(g)
+Qb008 @s2 : seldecomp y a, by(g) abc(1) xyz
+Qb010 @s2 : seldecomp y a, by(g) sequentially seq
+Qb013 @s2 : seldecomp y a, by(g) seq(1)
+Qb014 @s2 : seldecomp y a, by(g) iter(abc)
+Qb015 @s2 : seldecomp y a, by(g) focal
+Qb017 @s2 : seldecomp y a, by(g) iterate
+Qb018 @s2 : seldecomp y a, by(g) ratio
+Qb019 @s2 : seldecomp y a, by(g) outcomes
+Qb020 @s2 : seldecomp y a, by(g) ratio(1x)
+Qb021 @s2 : seldecomp y a, by(g) outcomes(1x)
+Qb022 @t : seldecomp y ta, by(group) outcomes(x*)
+Qb025 @s2 : seldecomp y a, by(g), sequentially
+Qb027 @s2 : seldecomp y a, by(g) 5
+Qb028 @s2 : seldecomp y a, by(g) "abc"
+Qb036 @s2 : seldecomp y a, by(g) reps(5) swap bca
+Qb037 @s2 : seldecomp y a, by(g) REPS(5)
+Qb038 @s2 : seldecomp y a, by(g) r(5) re(6)
+Qb039 @s2 : seldecomp y a, by(g) cluster dots
+Qb040 @s2 : seldecomp y a, by(g) bayesboot(seed(3) nodots generate(bw)) seed(4)
+Qb041 @s2 : seldecomp y a, by(g) level(90) bayesboot(level(80) nodots generate(bw))
+Qb051 @s1 : seldecomp y a, by(gstr) swap focalgroup(alpha one)
+Qb060 @s2 : seldecomp y a, by(g) generate(rk, replace) replace
+Qb063 @s2 : seldecomp y a, by(g) nodiagn(1)
+Qb064 @s2 : seldecomp y a nodiagnostics, by(g)
+Qb065 @s2 : seldecomp y a [a=w], by(g)
+Qb066 @s2 : seldecomp y a [p=w], by(g)
+Qb070 @s2 : seldecomp y a [f=w], by(g)
+Qb071 @s2 : seldecomp y a [fr=w], by(g)
+Qb072 @s2 : seldecomp y a [i=w], by(g)
+Qb074 @s2 : seldecomp y a [ww=w], by(g)
+Qb076 @s2 : seldecomp y a [xyz=w], by(g)
+Qb077 @s2 : seldecomp y a [pw=w+], by(g)
+Qb082 @s2 : seldecomp y [pw=w] a, by(g)
+Qb087 @s2 : seldecomp y a in abc, by(g)
+Qb088 @s2 : seldecomp y a in 5/, by(g)
+Qb091 @s2 : seldecomp y a in first/last, by(g)
+Qb102 @s2 : seldecomp y nosuch if nosuch2 > 1, by(g)
+Qb126 @s1 : seldecomp y a if sn == 1, by(g)
+Qb138 @s1 : seldecomp y a if (z > 0, by(g)
+Qb139 @s1 : seldecomp y a if z > 0 & , by(g)
+Qb146 @t : seldecomp y* ta, by(group)
+Qb149 @t : seldecomp y x*, by(group)
+Qb150 @s2 : seldecomp y a b, by(g) sequentially generate(abcdefghijabcdefghijabcdefghij12)
+Qb151 @s2 : seldecomp y a b, by(g) generate(rk-1)
+Qb152 @s2 : seldecomp y a b, by(g) generate(bw_1) bayesboot(reps(2) nodots generate(bw))
+Qb165 @s2 : seldecomp y a b, by(g) cformat(%9.2ec)
+Qb168 @s2 : seldecomp y a b, by(g) cformat(9.2f)
+Qb173 @s2 : seldecomp y a b, by(g) cformat(%9.2f %9.2f)
+Qb174 @s2 : seldecomp y a b, by(g) cformat(%9.2F)
+Qb186 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2), rseed(1))
+Qb187 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) REPS(2))
+Qb188 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) reps(3))
+Qb189 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) str)
+Qb190 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) seed)
+Qb192 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps)
+Qb193 @s2 : seldecomp y a b, by(g) bayesboot(nodots(1) generate(bw) reps(2))
+Qb194 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) dots(abc))
+Qb195 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) level(95) level(90))
+Qb200 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) cl(cl) cluster(cl))
+Qc017 @s2 : seldecomp y a, by(g3) nochain
+Qc020 @s2 : seldecomp y a, by(g) force noforce
+Qc022 @s2 : seldecomp y a, by(g) noseq(1)
+Qc031 @s2 : seldecomp y a [fre=w], by(g)
+Qc033 @s2 : seldecomp y a [PW=w], by(g)
+Qc034 @s2 : seldecomp y a [c=w], by(g)
+Qc035 @s2 : seldecomp if z > 0, by(g)
+Qc036 @s2 : seldecomp y a [pw=w] if z > 0 in 1/30 by(g)
+Qc040 @s2 : seldecomp y a sequentially if z > 0 by(g)
+Qc042 @s2 : seldecomp y a by(g) [pw=w]
+Qc043 @s2 : seldecomp y a by(g) sequentially force, mincell(5)
+Qc048 @s2 : seldecomp y c.z, by(g) contvars(z 3, Pooled)
+Qc049 @s2 : seldecomp y c.z, by(g) contvars(z 3, recut, pooled)
+Qc050 @s2 : seldecomp y c.z, by(g) contvars(z 3, pooled(1))
+Qc051 @s2 : seldecomp y c.z, by(g) contvars(1z 3)
+Qc052 @s2 : seldecomp y c.z, by(g) contvars(z 3 a* 2)
+Qc053 @t : seldecomp y c.x3, by(group) contvars(x* 3)
+Qc055 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(abcdefghijabcdefghijabcdefghij12) reps(2))
+Qc060 @s2 : seldecomp y a b, by(g) focalgroup(1) focalgroup(0)
+Qd008 @s4 : seldecomp y a b if txt == "  padded", by(grp) focalgroup(First)
+Qd009 @s4 : seldecomp y a b, by(txt) focalgroup(padded)
+Qd010 @s4 : seldecomp y a b, by(city)
+Qd011 @s4 : seldecomp y a b if city == "Zürich", by(city)
+Qd042 @s1 : seldecomp y a b [pw=w0] if w0 == 0 & id == 19, by(g)
+Qd043 @s1 : seldecomp y a b [pw=w0] if g == 0 | mod(id, 19) == 0, by(g)
+Qd044 @s1 : seldecomp y a b [pw=w0] if g == 0 | mod(id, 19) == 0, by(g) focalgroup(1)
+Qd046 @s1 : seldecomp y a b [pw=w0] if g == 1 | mod(id, 19) == 0, by(gl) focalgroup("Urban area")
+Qd047 @s1 : seldecomp y a b [pw=w0] if g == 0 | mod(id, 19) == 0, by(gstr)
+Qd048 @s1 : seldecomp y a b [pw=w0] if inlist(g4, 10, 20) | (g4 == 30 & mod(id, 19) == 0), by(g4) focalgroup(30)
+Qd049 @s1 : seldecomp y a b [pw=w0] if inlist(g4, 10, 20) | (g4 == 30 & mod(id, 19) == 0), by(g4) focalgroup("Period 3")
+Qd050 @s1 : seldecomp y a b [pw=w0] if inlist(g5, 1, 2) | (g5 == 3 & mod(id, 19) == 0), by(g5) focalgroup(3)
+Qd052 @s1 : seldecomp y a b [pw=w0] if g == 0 | mod(id, 19) == 0, by(gstr) focalgroup(beta two)
+Qd053 @s1 : seldecomp y a b [pw=w0] if g == 1 | (g == 0 & mod(id, 19) == 0), by(gstr) focalgroup(alpha one)
+Qd054 @s1 : seldecomp y a b [pw=w0] if (g == 1 & id < 300) | (g == 0 & mod(id, 19) == 0), by(gstr) focalgroup(alpha)
+Qd055 @s1 : seldecomp y a b, by(gl) focalgroup(Rural)
+Qd059 @s1 : seldecomp y a b, by(gneg) focalgroup(x)
+Qd062 @s1 : seldecomp y a b if g4 <= 20, by(g4) focalgroup(30)
+Qd063 @s1 : seldecomp y a b if g == 0, by(gl)
+Qd064 @s1 : seldecomp y a b if g == 1, by(gstr)
+Qd065 @s1 : seldecomp y a b, by(g5)
+Qd066 @s1 : seldecomp y a b, by(many)
+Qd067 @s1 : seldecomp y a b if g5 == 3, by(g5) chain
+Qd069 @s2 : seldecomp y a b, by(g) generate(z) ratio(z)
+Qd070 @t : seldecomp y x1 x2, by(group) generate(ym) outcomes(ym)
+Qd071 @s2 : seldecomp y a c.z, by(g) generate(z) contvars(z 3)
+Qd072 @s2 : seldecomp y a b, by(g) generate(cl) bayesboot(cluster(cl) nodots generate(bw) reps(3) rseed(1))
+Qd074 @s2 : seldecomp y a b [pw=w*cl], by(g) generate(cl, replace)
+Qd078 @s2 : seldecomp y a b if _n <= 2, by(g) bayesboot(nodots generate(bw) reps(2) rseed(1))
+Qd080 @s2 : seldecomp y a b, by(g) bayesboot(nodots generate(bw) reps(2) rseed(1) level(95.555))
+Qd083 @s2 : seldecomp y a b [fw=w*2], by(g)
+Qd084 @s2 : seldecomp y a sequentially by(g)
+Qf001 @s1 : seldecomp ym neg fixothermargins, noisily by(g4) chain pformat(%5.2f) sequentially, bayesboot(reps(15) rseed(49329) nodots bc cluster(cl1) generate(bw))
+Qf002 @s1 : seldecomp yb neg [pw=wm], by(gstr) pformat(%5.2f) bayesb(leve(99.5) nodots generate(bw) clu(cls) reps(12) rseed(23702)) sequentially pformat(%5.2f)
+Qf003 @t : seldecomp ym xs x4#ta i.x1 c.x3 if !missing(ym) & id <= 500, by(group) Contvars(x3 3, pooled recut) bayesboot(generate(bw) nodots reps(15) rseed(32451) level(99.5))
+Qf005 @s1 : seldecomp ym big c5 i.dec [pw=w0] in 51/l, by(gm), cformat(%9.2e) insupport mincell(25)
+Qf008 @s1 : seldecomp y thin (demo: a_very_long_variable_name_32char sm#sn) [pw=wf], by(gf) sequentially forcex reverse fixothermargins(1) iterate(3)
+Qf010 @t : seldecomp ybin ta x4 xc [pw=wz] if inlist(x1, 1, 2), by(gs) detail fixothermarginsx trimfrequency(often) swap reverse ratio(hm) sequential focalgroup("beta") trimhiabs(3.95) iterate(400) force ctrltolerance(1e-3)
+Qf012 @s1 : seldecomp ybig (work: fo d##a) varlabels, by(g4) fixothermargins Chain sequen
+Qf013 @t : seldecomp earn c.x3 i.xj [aw=wz] if inrange(x3, -1, 1.5) & id <= 500, by(gs) individually contvars(x3 10, refgroup) focalgroupx("alpha") fixothermargins bayesboot(nodots generate(bw) citable reps(6) rseed(61275))
+Qf016 @s1 : seldecomp yneg (work: sn) (blk: c5##c.zs many lab_long) [aw=wf], by(gl), covariatedetail focalgroup(1) insupport contvars(zs 2)
+Qf017 @t : seldecomp ybin ta x4 xc [pw=wz] if inlist(x1, 1, 2), by(gs) detail fixothermargins Trimfrequency(often) reverse ratio(hm) sequential focalgroup("beta") trimhiabs(3.95) iterate(400) force ctrltolerance(1e-3)
+Qf018 @s1 : seldecomp yneg lab_long sn sm [pw=wf], noisily by(g4) sequentially cformat(%12.0g) normal chain
+Qf020 @s1 : seldecomp ym (fo i.lab_long) by(gf), insupport individually
+Qf021 @s1 : seldecomp yf (blk: i.b sn i.thin) (A1: sm), by(gm) force covariatedetail(1) sequentially trimhiabs(2.26) detail iterate(40)
+Qf025 @t : seldecomp y (ta x4) [pw=wz] if id <= 500 fixothermargins, by(group) pformat(%6.4f) sequentially iterate(40) force focalgroup("Group zero") bayesboot(reps(20) rseed(46124) nodots generate(bw) percen) trimfrequency(often) cformat trimhirel(1.25)
+Qf028 @s2 : seldecomp y b c.z [pw=w], by(g), ratio(w) sequent contvars(z 3, refgroup)
+Qf029 @s1 : seldecomp ysml (thin i.a_very_long_variable_name_32char big) [pw=wf], trimloabs(0.69) iterate(40) Ratio(den0) diagnostics generate(rk) sequentiall insupport force by(gstr)
+Qf035 @s1 : seldecomp yf dec c.zf i.sm, , by(gl) sequentially insuppor contvars(zf 10, refgroup) bayesboot(r(10) rseed(34333) percentile nodots citable generate(bw) norma) detail mincell(100) generate(rk)
+Qf036 @s1 : seldecomp y c.zf sn i.a big [pw=wbig], by(gl) bayesboot(level(50) generate(bw) ties r(25) rseed(7446) nodots), noforce contvars(zf 5, focalgroup)
+Qf040 @s1 : seldecomp yf dec c.zf i.sm, by(gl) sequentially insuppor contvars(zf 10, refgroup) normal bayesboot(r(10) rseed(34333) percentile nodots citable generate(bw) norma) detail mincell(100) generate(rk)
+Qf046 @t : seldecomp earn xc x4 x1 by(group),
+Qf052 @s1 : seldecomp ybig (work: a) c.zf (geo: d) [pw=wi], bayesboo(cluster(cls) nodots reps(20) generate(bw) rseed(40716)) by(gstr) iterate(400) trimfrequency(once) force, cont(zf 4, pooled) trimhiabs(3.22) trimhirel(2.26) ratio(den0) sformat(%7.1f)
+Qf057 @t : seldecomp ybin x1 i.x4 ta [pw=wz], by(group) reverse(1) fixothermargins seq focalgroup("Group zero") outcomes(ym)
+Qf062 @t : seldecomp ybin (blk: i.xc x2) [aw=wz], by(g3) chain force force mincell(100)
+Qf064 @t : seldecomp y i.x2 x1 [pw=wt], by(g3) insupportx(1) chain
+Qf069 @s1 : seldecomp yb c.zt b sm cmv many [iw=wi], by(gstr) sformat(%7.1f) fixothermargins bayesboot(rseed(96702) nodots citable cluster(cl) generate(bw) reps(8)) fixothermargins, focalgroup("beta two") individually contvars(zt 2, recut) cformat(%12.0g)
+Qf078 @s1 : seldecomp y neg sn#big, by(g4) chainx seque bayesboo(re(20) cluster(clm) rseed(64099) generate(bw) nodots normal)
+Qf080 @s1 : seldecomp yb cmv i.lab_long [iw=wsm], by(gstr), reverse cformat(%9.2e) sequentially focalgroup("beta two")
+Qf085 @s2 : seldecomp y (a b) [pw=w] by(g), sequentially reverse ratio(w) generate(rk) bayesboot(generate(bw) reps(25) rseed(85506) bca nodots) det
+Qf086 @s1 : seldecomp yb c.zt b sm cmv many [iw=wi], by(gstr) sformat(%7.1f) fixothermargins bayesboot(rseed(96702) nodots citable cluster(cl) generate(bw) reps(8)) focalgroup("beta two") individually, contvars(zt 2, recut) cformat(%12.0g)
+Qf090 @t : seldecomp y (demo: xj) x2#xs if a = 1, by(g3) cformat(%9.3x) sequentially chain
+Qf092 @s1 : seldecomp ym big many cmv c.zs [pw=wi], by(gl) focalgroup(zz) contvars(zs 8) gene(rk) sequentially
+Qf093 @t : seldecomp earn x1#x2, by(gs) ctrltolerance(1e-9) focalgroup("alpha"), generate(rk)
+Qf095 @s1 : seldecomp yf (blk: i.b sn i.thin) (A1: sm), by(gm) force covariatedetail sequentially Trimhiabs(2.26) detail iterate(40)
+Qf100 @s1 : seldecomp yb thin##c.z [pw=wbig], by(gm) force(1) iterate(40) generate(rk) contvars(z 3) trimloabs(0.62)
+Qf102 @s1 : seldecomp y0 (blk: sn i.big) [pw=wf], by(g5) chain tolerancex(1e-12) sequentially
+Qf105 @t : seldecomp y (ta x4) [pw=wz] if id <= 500, by(group) pformat(%6.4f) sequentially iteratex(40) force focalgroup("Group zero") bayesboot(reps(20) rseed(46124) nodots generate(bw) percen) focal fixothermargins trimfrequency(often) cformat(%12.5g) trimhirel(1.25)
+Qf107 @t : seldecomp earn i.ta in 50/l, ratiox(nosuch) by(gs) focalgroup("alpha") individually ratio(hrs) generate(rk)
+Qf110 @t : seldecomp earn xs##ta [pw=wz] if ym >= 3 & x4 != "west", trimhirel(1.93) by(g3) chain iterate(200) trimhirel(1.93) seed(3) sequentially force
+Qf113 @s1 : seldecomp ym thin big [pw=wm], by(gf) insupport by
+Qf118 @t : seldecomp y x2 ta i.xc [pw=wt] if ym < 12, generate(rk) by(group) generate(rk)
+Qf121 @s1 : seldecomp yb thin##c.z [pw=wbig], by(gm) force iterate(40) Generate(rk) contvars(z 3) trimloabs
+Qf129 @s1 : seldecomp y0 (blk: i.a big) [pw=wi], bayesboo(percentile generate(bw) rseed(31260) nodots re(10) normal), pformat(%6.4f) by(gl)
+Qf150 @s1 : seldecomp ym i.lab_long d (demo: neg many) [pw=wi], by(gneg) focalgroup(5) reverse sequentially bayesboot(reps(20) nodots cluster(cl) generate(bw) bc rseed(10646)), force trimsupportoverride trimhiabs(3.36) iter(100) by(gneg) trimloabs(0.29)
+Qf155 @s2 : seldecomp y a b, by(g) covariatedetail sformat(%8.3f) r(10) individually bayesb(bc nodots rseed(74304) normal rep(20) generate(bw)) ratio(w)
+Qf173 @s1 : seldecomp yb (i.neg lab_long##c.z) if inlist(c5, 1, 2, 3, 4), by(gm) ratio(den0) contvars varlabels mincell(100) generate(rk, replace)
+Qf177 @s1 : seldecomp y c.zt big [pw=w0], by(g), detail fixothermargins contvars(zt 8) ratio(den) reverse covariatedetail sequentially
+Qf186 @t : seldecomp earn i.ta in 50/l, weight(0) by(gs) focalgroup("alpha") individually ratio(hrs) generate(rk)
+Qf189 @s1 : seldecomp ysml d (i.sm) neg if inlist(c5, 1, 2, 3, 4), cformat(%9.3f) by(g) focalgroup(1) cformat(%9.3f)
+Qf193 @s1 : seldecomp ybig c5 [pw=w0], by(gm) focalgroup(1) sformatx(%7.1f) individually bayesboot(reps(8) generate(bw) rseed(21667) nodots normal tinterval) fixothermargins
+Qg002 @s1 : seldecomp ybig a (work: many) [iw=wsm], by(gl) bayesboot(rseed(51119) generate(bw) reps(25) nodots), outcomes(yb) generate(rk) ctrltolerance(1e-4) bayesboot(rseed(51119) generate(bw) reps(25) nodots) sformat(%8.3f)
+Qg003 @s1 : seldecomp yf b, by(gneg) varlab outcomes(ysml ym) outcomes(ysml ym) focalgroup(-1) rev sequentially
+Qg004 @s1 : seldecomp ysml (thin i.a_very_long_variable_name_32char big) [pw=wf], trimloabs(0.69) iterate(40) ratio(den0) diagnostics generate(rk) sequentiall insupport force by(group) by(g) iter by(gstr)
+Qg011 @t : seldecomp ybin xs x1##xc [pw=wt] By(gs), individually insupport
+Qg017 @s1 : seldecomp yneg b big sn individually, by(gneg) covariatedetail outcom(yf y) force iterate(3)
+Qg021 @t : seldecomp y x4#xc [pw=wt], by(group) sequentially mincell(0) focalx
+Qg022 @s1 : seldecomp ym c5 i.thin [pw=wsm] rati(denm), by(g) focalgroup(0) cformat(%9.3f) mincell(100) trimlorel(0.86) trimsupportoverride trimloabs(0.62) iterate(400) sequentially covariatedetail force trimhiabs(1.58)
+Qg029 @s1 : seldecomp ym i.sm c5 (A1: cmv), tolerance outcomes(yf yneg) by(gl) detail mincell(25) sequentialx
+Qg033 @s1 : seldecomp ybig thin fo neg##lab_long [pw=wi] by(gl), trimfrequency(once) reverse diagnostics sequentially fixothermargins
+Qg042 @s1 : seldecomp yb sn [pw=w] if inlist(c5, 1, 2, 3, 4), by(g4) force trimloabs(0.69), chain iterate(100) sequentially
+Qg046 @s1 : seldecomp ysml b big a, by(gl), w(0.5) focalgroup("Urban area") fixothermargins individually
+Qg051 @s1 : seldecomp yb neg [pw=wm], by(gstr) by(nosuch), bayesb(leve(99.5) nodots generate(bw) clu(cls) reps(12) rseed(23702)) sequentially pformat(%5.2f)
+Qg053 @s1 : seldecomp y thin (demo: a_very_long_variable_name_32char sm#sn) [pw=wf], by(gf) sequentially force reverse fixothermargins, iterate(3)
+Qg069 @s1 : seldecomp yneg a_very_long_variable_name_32char c.zf sn##d, trimsupportoverride contvars(zf 3) individually fixothermargins outcomes(y ysml) individually generate(rk) by(gm)
+Qg077 @s2 : seldecomp y a c.z i.b [pw=w] if z > -1.5 trimhiabs(2.32), by(g) force iterate(100) generate(rk) sequentially contvars(z 2, pooled) varlabels
+Qg080 @t : seldecomp ybin (geo: c.xt i.xs) [pw=wt], varlabelsx by(group) contv(xt 2, recut) sequentially
+Qg082 @t : seldecomp ybin ta x4 xc [pw=wz] if inlist(x1, 1, 2), by(gs) detail fixothermargins trimfrequency(often) reverse trimfrequency(always) ratio(hm) sequential focalgroup("beta") trimhiabs(3.95) iterate(400) force ctrltolerance(1e-3)
+Qg085 @t : seldecomp y xc [pw=wz], by(g3) chain ctrltolerance(-1) noisily sequentially
+Qg089 @s2 : seldecomp y b#a [aw=w] if z > -1.5 varlabels, by(g) force trimloabs(0.53) weight(1) trimlorel(0.65) trimsupportoverride iterate(40) trimfrequency(once) trimhirel(2.3)
+Qg095 @s1 : seldecomp ym c.zt i.cmv sm, by(gm) cformat Contvars(zt 4) varlabels diagnostics
+Qg097 @t : seldecomp ybin c.xt xs i.x4 [pw=wt], , contva(xt 3) sequentially detail by(group) vce(robust) focalgroup("Group zero")
+Qg101 @s1 : seldecomp ym thin big [pw=wm] by(gf), rseed(4) insupport
+Qg102 @s1 : seldecomp ysml c.zf neg if id <= 450, by(g) contvars(zf 4) outcomesx(ym) individually individually
+Qg108 @s1 : seldecomp ym big c5 i.dec [pw=w0] in 51/l, by(gm) cformat(%9.2e) Insupport mincell(25)
+Qg123 @s1 : seldecomp yneg sn#d neg fo, by(gm) bayesbootx(strata(x) nodots generate(bw))
+Qg126 @s1 : seldecomp ym dec [aw=w] if sn != "mid land" by(gl),
+Qg133 @t : seldecomp y (geo: i.xc i.xs x1##x4) (blk: c.x3) [iw=wz], iter by(gs) contvars(x3 10) force contvars(x3 10)
+Qg136 @s1 : seldecomp ybig cmv [pw=w0], diagn cformat(%9.2e) by(gm) Focalgro(1)
+Qg141 @t : seldecomp ym i.x4 c.x3 i.x2 xs [pw=wz] if ym >= 3 & x4 != "west" in f/887, by(group) contvars(x3 2) mincell
+Qg144 @s1 : seldecomp yf (work: lab_long i.b) [pw=w] if zf >= -1.5 & zf < 2 by(gstr), vce(robust)
+Qg148 @t : seldecomp ybin x1 xs [pw=wt], varlab by(group) Mincell(100) diagnostics outcomes(earn) varlab
+Qg158 @t : seldecomp earn x4 ta x2 [aw=wt] if inlist(x1, 1, 2), focalgr("Group one") iterate(40) trimfrequency(once) reverse trimloabs(0.45) varlabels bc individually by(group) force
+Qg159 @s1 : seldecomp ysml i.big c5 neg##c.zm thin [pw=w0], by(gneg) sequenti focalgr(-1) detail pformat(%5.2f) sformat(%8.3f) contvars(nosuch 3) contvars(zm 2, recut) bayesboot(bca nodots rseed(40773) lev(90) reps(25) generate(bw))
+Qg164 @s1 : seldecomp yf (blk: c.zm fo a_very_long_variable_name_32char) [pw=w], by(gl) covariatedetail contvars(zm 3) covariatedetail generate(rk)
+Qg176 @s1 : seldecomp yf b, by(gneg) detail(1) diagnostics bayesboot(reps(6) cluster(cl1) generate(bw) bca rseed(46016) nodots normal) reverse sequentially
+Qg180 @t : seldecomp earn x1 (c.x3) [pw=wz] if x1 == 1 | x2 == 1 diagno, by(group) sequen contvars(x3 4) detail diagno
+Qg189 @t : seldecomp ym i.xs xc xj c.x3 [pw=wz] if id <= 500, by(gs) force bayesboot(nodots generate(bw) cluster(cm) rseed(74256) reps(25)) Noisily trimhirel(1.61) contvars(x3 3) gener(rk)
+Qg191 @s1 : seldecomp ym (work: c5 c.zs) neg [pw=wsm] by(gf), mincell contvars(zs 4)
+Qg194 @t : seldecomp earn x2##xj [pw=wt], tint by chain sequentially
+Qg196 @t : seldecomp earn x1#x2, by, ctrltolerance(1e-9) focalgroup("alpha") generate(rk)
+Qg204 @s1 : seldecomp y dec neg thin a_very_long_variable_name_32char, by(gneg) fixothermargins insupport varl focalgroup(5) sequentially nosequentially
+Qg208 @t : seldecomp y xc##c.xt i.ta i.xj c.x3 [aw=wt], by(gs) contvars(xt 3 x3 5) focalgroup("beta") individually generate(rk) ctrltolerance(-1) insupport varlabels ctrltolerance(-1)
+Qg216 @s2 : seldecomp y (work: a) (A1: b) [pw=w] weight(1), by(g) individuall generate(rk)
+Qg223 @s1 : seldecomp ybig sm c.zt neg fo [iw=wf] if neg < 1 | b == 1, by(gl) sequentially bayes(nodots rseed(42249) generate(bw) reps(25) ties), sformat(%8.3f) contvars(zt 5, recut) fixothermargins pformat(%5.2f)
+Qg226 @s1 : seldecomp ysml i.fo i.d [pw=wm] by(gf),
+Qg228 @t : seldecomp ybin xc##c.xt mincell(100), by(g3) chain contvars(xt 4) pooled
+Qg230 @s1 : seldecomp yf lab_long d if many <= 30, revers sequentially mincell(25) bayesboot(cluster(clm) percentile nodots rseed(17638) reps(20) citable generate(bw)) insupport ratio(den0) by(gm) focalgroup(zz) mincell(-2) detail
+Qg236 @s2 : seldecomp y b#a [aw=w] if z > -1.5, by(g) Force trimloabs(0.53) trimlorel(0.65) trimsupportoverride iterate(40), trimfrequency(once) varlabels trimhirel(2.3)
+Qg241 @s1 : seldecomp ybig a_very_long_variable_name_32char c.zs [pw=wsm], level(90) by(g) contvars(zs 3) iterate(400) iterate(400) pformat(%5.2f) force trimloabs(0.21) outcomes(yb) bayesboot(generate(bw) citable rseed(67015) nodots percentile re(10))
+Qg242 @s1 : seldecomp yneg a_very_long_variable_name_32char c.zf sn##d fixothermargins, contvars(zf 3) outcomes(y ysml) individuallyx generate(rk) by(gm)
+Qg246 @s1 : seldecomp ysml i.b i.a thin i.sn [pw=wsm], sformat(%5.1q) by(g) diagnostics sequentially focalgroup(1) outcomes(yneg y)
+Qh004 @s1 : seldecomp y a b, by(g) ratio(sn)
+Qh005 @s1 : seldecomp y a b, by(g) ratio(gstr) outcomes(sm)
+Qh009 @s2 : seldecomp y a c., by(g)
+Qh010 @s2 : seldecomp y a i., by(g)
+Qh011 @t : seldecomp y x*#ta, by(group)
+Qh012 @s2 : seldecomp y a#a, by(g)
+Qh013 @s2 : seldecomp y a##b#a, by(g)
+Qh014 @s2 : seldecomp y c.z#c.z, by(g) contvars(z 3)
+Qh015 @t : seldecomp y x1 [pw=wt] if cluster <= 2, by(group) bayesboot(cluster(cluster) nodots generate(bw) reps(2) rseed(1))
+Qh025 @s2 : seldecomp y a b, by(g) contvars(nosuch 3) outcomes(z) ratio(sn)
+Qh037 @s2 : seldecomp y (marg_expl: a) b, by(g) individually
+Qh048 @s2 : seldecomp y a b if (z > 0) & (a == 1)), by(g)
+Qk006 @s2 : seldecomp y a [pw=w] by(g), sformat(%7.1f) individually fixothermargins bayesboot(reps(8) nodots rseed(67018) generate(bw))
+Qk010 @s1 : seldecomp y b in f/409, by(gm) reverse sequentially chain tolerance(.001) fixothermargins tolerance(.001)
+Qk012 @t : seldecomp ym xj c.xt [pw=wz] if id <= 500, Force by(g3) bayesboot(reps(12) cluster(cluster) normal rseed(70610) nodots generate(bw)) chain contvars(xt 2)
+Qk014 @t : seldecomp ybin x1 x4 x2 ta [pw=wt], by(group) covariatedetail sequentially focalgroup(1) Ties
+Qk021 @t : seldecomp y c.xt (x1) [pw=wz], by(group) Iterate(400) cformat(%9.2e) contvars(xt 10, refgroup) force varlabe trimhirel(2.35) trimfrequency(once)
+Qk022 @s1 : seldecomp y0 thin neg c5 a_very_long_variable_name_32char##c.zs, by(gstr) r(10) focalgroup("beta two") contvars(zs 5) detail sequentially
+Qk027 @s1 : seldecomp ym neg a [pw=wsm], Sequenti detail insupport fixothermargins(1) by(gl)
+Qk035 @s1 : seldecomp y0 thin i.a [pw=wbig], diagnostics sequentially bayesboot(citable perc nodots rseed(3033) cluster(cl1) generate(bw) reps(8)) sformat(%8.3f) tint force by(gl)
+Qk037 @s1 : seldecomp ym (a_very_long_variable_name_32char##dec c.zm c.zs) [aw=wbig], by(gneg) bayesbo(rseed(84254) nodots reps(20) generate(bw)) varlabels dots contvars(zm 10 zs 8, recut)
+Qk039 @s1 : seldecomp ybig d##lab_long [pw=w0] if inlist(c5, 1, 2, 3, 4), by(gneg) bayesboot(tinter cluster(clm) bc nodots reps(25) rseed(59124) generate(bw)) mincell(1) pformat(%6.4f) ties
+Qk045 @t : seldecomp ym (work: xs x2) (demo: x4) (A1: c.xt) [aw=wt] if id > 300 & id <= 1700 by(group), fixx individu diagnostics outcomes(ybin earn) contvars(xt 4, focalgroup)
+Qk052 @s1 : seldecomp yb (blk: i.sm c5) [pw=wsm] by(gl), force trimfreque(sometimes) pformat(%5.2f) trimlorel(0.96) iterate(400) bayesboot(rseed(21692) reps(20) percentile generate(bw) citable nodots) focal
+Qk053 @s1 : seldecomp ybig i.c5 big (c.zs c.z) [iw=wf] if neg < 1 | b == 1, trimhiabs(x) by(gneg) outcomes(y) contvars(zs 10 z 2, pooled) covariatedetail individually
+Qk054 @s2 : seldecomp y a b [pw=w] if z > -1.5, by(g) bayesboot(nodots reps(25) bc bca generate(bw) rseed(69974)) Individually covariatedetail sformat(%7.1f)
+Qk077 @s2 : seldecomp y b c.z, by(g) fixothermargins perc sequentially ctrltolerance contvars(z 2, focalgroup) ratio(w)
+Qk081 @s2 : seldecomp y b [pw=w] by(g), force covariatedetail sequentially fixothermargins
+Qk082 @s1 : seldecomp yneg b many c.zf dec if inlist(c5, 1, 2, 3, 4) diagnostics, by(gl) bayesboot(rseed(61707) generate(bw) reps(15) nodots) contv(zf 8) sformat(%8.3f)
+Qk085 @s1 : seldecomp yb c.z thin sn##neg c5 [pw=wi], by(gf) level(90) sequentially fixothermargins contvars(z 8) level(90)
+Qk090 @s2 : seldecomp y b [pw=w], by(g) detail reps(5) pformat(%5.2f) sequentially bayesboot(rseed(9795) generate(bw) citable re(15) normal nodots)
+Qk095 @s1 : seldecomp y a b [aw=wi], by(g) sequentially, swap
+Qk103 @s1 : seldecomp y i.sn [pw=wi] if id <= 450, trimlorel(0.49) diagnostics sequentially Iter(400) trimsupportoverride fixothermargins individually trimhiabs(2.88) force by(gf) covariatedetail
+Qk120 @s1 : seldecomp y c5 (demo: many) [pw=w0], ratio(den) generate(a b) seed(3) bayesboot(reps(8) rseed(98573) normal bc citable bca tinterval generate(bw) nodots) noisily by(gneg) pformat(%5.2f)
+Qk124 @s1 : seldecomp y a b c5 d sn [pw=w] by(g), tolerance(1e-14) noisily Sequentially
+Qk125 @t : seldecomp y (x1 x2 x4), by(group) detailx generate(rk, replace) sequentially
+Qk130 @t : seldecomp ym xs i.x2 xc [pw=wt], varlabels by(group) varlabels level(90)
+Qk132 @s2 : seldecomp y a [pw=w] det, by(g) fixothermarginsx bayesboot(reps(8) nodots cluster(cl) ties generate(bw) rseed(48477) tinterval) sequentially
+Qk139 @s1 : seldecomp ysml cmv i.d, sequenti by(gm) seq(1) rever sequenti
+Qk154 @t : seldecomp ym ta [pw=wz] if id <= 500, by(group) sformat(%8.3f) bc bayesbo(nodots reps(20) ties generate(bw) level(99) bc rseed(25546))
+Qk156 @s1 : seldecomp yneg one (blk: neg) sn##c.zm [pw=w] tol(1e-10), by(g) trimhirel(2.12) bayesboot(generate(bw) bc reps(8) rseed(53198) nodots) SEQUENTIALLY contvars(zm 2) trimhiabs(1.98) force sformat(%7.1f) diagnostics
+Qk171 @t : seldecomp ybin (A1: c.xt x4 xj) [pw=wt], by(gs) varlabels sequentially cont(xt 2) cont(xt 2) diagno detail fixothermargins
+Qk174 @t : seldecomp y c.x3 x2 x1 [pw=wz], outcomes(ym) by(group) contvx(x3 4, pooled) outcomes(ym)
+Qk177 @s1 : seldecomp yf (lab_long##c.z b) [pw=w] if sn != "mid land", by(gl) force outcomes(ybig) bayesboot(nodots generate(bw) rseed(7609) reps(25)) cluster(cl) iterate(1) ratio(den) force contvars(z 2)
+Qk187 @s1 : seldecomp ysml c5 c.zs big##b [pw=wf], by(gl) pformat(%6.4f) contvars(zs 4) bayes(nodots reps(20) rseed(91977) cluster(cl1) generate(bw)) bc out(y) contvars(zs 4) insupport
+Qk191 @t : seldecomp ym i.xs [aw=wt] if id <= 500, by(gs) pformat(%5.2f) outcomes(earn) insupp bayesboot(nodots ties rseed(21081) reps(20) generate(bw)), sequen detail reverse fixotherma
+Qk194 @s1 : seldecomp ym neg i.big sn [pw=w] by(gl), sequenti fixothermargins
+Qk196 @t : seldecomp earn (ta c.xt x4#x2 x1) if id <= 500 SEQUENTIALLY, fixothermargins outcomes(y) sequentially contvars(xt 4, refgroup) reverse by(gs) covariatedetail bayesboot(tinterval nodots generate(bw) percentile rseed(47115) ties reps(25))
+Qk200 @s2 : seldecomp y c.z b [pw=w] if id <= 34, by(g) gene(rk, replace) fixothermargins reverse contvars(z 2) sequen gene(rk, replace)
+Qk205 @t : seldecomp ym x1 x2 ta [aw=wz], detail by(g3) Mincel(100) insupport chain
+Qk208 @s1 : seldecomp yf (work: c.z big) (demo: i.dec) [pw=wf] if id <= 450, bayesboot(reps(20) generate(bw) bca rseed(31580) nodots) contvars(z 5) by(gstr) individuallyx pformat(%5.2f) insupport
+Qk209 @t : seldecomp earn (xc c.xt c.x3 xs xj) [pw=wz], by(group) trimloabs(0.35) contvars(x3 2 xt 10), insupp force
+Qk212 @t : seldecomp y x4 x1 xs by(group) trimfrequency(often), force trimhiabs(2.1) trimhirel(2.03) sequentially
+Qk213 @s1 : seldecomp ysml (A1: cmv b), by(g4) insuppo seque cformat(%9.2e) fixothermargins fixotherx chain
+Qk218 @s2 : seldecomp y a, by(g) bayesboot(bca reps(20) generate(bw) rseed(79700) nodots cluster(cl)) sformat(%7.1f) sequentially ties bayesboot(bca reps(20) generate(bw) rseed(79700) nodots cluster(cl)) insupport
+Qk221 @s1 : seldecomp yc c5 d sm i.many, individually by(gneg) fixothermar(1) cformat(%12.5g) cformat(%12.5g)
+Qk225 @s1 : seldecomp y (a) (b) (c5) [pw=w], by(g) individually trimhiabsx(2.5) trimfrequency(once) forcex
+Qk230 @s1 : seldecomp ym i.many lab_long, by(gl) sequentially sformat(%7.1f) Bayes(reps(10) rseed(39314) norm generate(bw) nodots bca) varlabels
+Qk234 @s1 : seldecomp y lab_long c5 b, by(gl) varlabels sequentially covariatedetailx
+Qk237 @t : seldecomp ym c.x3 x4 i.x1 [pw=wz] if inlist(x1, 1, 2) & id <= 500, by(gs) contvars(x3 8, recut) bayesx(rseed(12829) citable reps(15) nodots generate(bw)) covariatedetail sequentially ratio(hrs)
+Qk238 @s1 : seldecomp y dec sn a [pw=w], by(g5) sequentially fixothermargins Chain weight(1) varlabel
+Qk243 @s1 : seldecomp y (lab_long b) [iw=w0], by(gneg) individually trimloabs(0.66) trimsupportoverride bayesboot(reps(1) nodots generate(bw)) diagnostics trimfrequencyx(often) covariatedetail
+Qk248 @s2 : seldecomp y c.z b by(g), bayesboot(generate(bw) reps(8) rseed(11820) bc nodots percentile) contvars(z 3, recut)
+Qk251 @s1 : seldecomp y a#b [pw=wbig] trimhirel(2.87), iterate(400) covariatedetail ratio(den) force by(gstr) trimlorel(0.84) ctrltolerance(1e-4)
+Qk255 @t : seldecomp ym x4 x2 [aw=wt] if id <= 500 by(gs), sequentially bayes(rseed(82941) ties nodots bca reps(6) generate(bw)) tolerance(abc) covariatedetail
+Qk260 @s2 : seldecomp y a [pw=w], by(g) sformat(%7.1f) sformat(%7.1f) individually fixothermargins bayesboot(reps(8) nodots rseed(67018) generate(bw))
+Qk264 @s2 : seldecomp y a b by(g),
+Qk269 @s2 : seldecomp y a#b [pw=w] focalgrou(1), nois by(g) nois
+Qk273 @s2 : seldecomp y a, by(g) sformat(%7.1f) sequentially bayesboot(bca reps(20) generate(bw) rseed(79700) nodots cluster(cl)) insupport insupport

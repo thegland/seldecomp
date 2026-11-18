@@ -1,0 +1,1 @@
+{"case": "e11", "cmd": "seldecomp y x1 x2 [pw=wt], by(group) sequentially individually", "rc": 198, "output": ["sequentially and individually may not be combined"]}

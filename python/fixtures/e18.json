@@ -1,0 +1,1 @@
+{"case": "e18", "cmd": "seldecomp y (a: x1) (a: x2) [pw=wt], by(group) sequentially", "rc": 198, "output": ["duplicate block name a"]}

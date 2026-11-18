@@ -1,0 +1,1 @@
+{"case": "e19", "cmd": "seldecomp y (a: ta) (b: tb) [pw=wt], by(group) sequentially fixothermargins", "rc": 430, "output": ["raking did not reach its targets at stage 1: 1 margin missed by more than", "    ctrltolerance(); worst: ta = 0 (raked share 59.81%, target 34.87%);", "    specify force to keep the results"]}

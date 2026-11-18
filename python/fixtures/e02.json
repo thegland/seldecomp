@@ -1,0 +1,1 @@
+{"case": "e02", "cmd": "seldecomp y x1 x2 [pw=wt], by(g3)", "rc": 459, "output": ["by(g3) takes 3 values (0, 1, and 2); it must take two"]}

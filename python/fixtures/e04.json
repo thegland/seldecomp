@@ -1,0 +1,1 @@
+{"case": "e04", "cmd": "seldecomp y x1 c.x3 [pw=wt], by(group)", "rc": 198, "output": ["c.x3 requires an entry in contvars(), e.g. contvars(x3 4)"]}
