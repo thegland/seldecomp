@@ -1,0 +1,1 @@
+{"case": "p30", "cmd": "seldecomp y (a: x1) (b: x2) [pw=wt], by(g3) chain sequentially fixothermargins reverse", "rc": 198, "output": ["reverse may not be combined with chain"]}

@@ -1,0 +1,1 @@
+{"case": "p40", "cmd": "seldecomp earn (a: x1) (b: x2) [pw=wt], by(g3) chain sequentially ratio(hrs) outcomes(y)", "rc": 198, "output": ["outcomes() may not be combined with chain"]}

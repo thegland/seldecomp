@@ -1,0 +1,1 @@
+{"case": "p39", "cmd": "seldecomp y (a: x1) (b: x2 x4) [pw=wt], by(g3) chain individually", "rc": 198, "output": ["individually may not be combined with chain"]}

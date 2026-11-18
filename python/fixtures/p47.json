@@ -1,0 +1,1 @@
+{"case": "p47", "cmd": "seldecomp y x1 x2 [pw=wt], by(x4) chain", "rc": 198, "output": ["chain requires a numeric by() variable"]}
