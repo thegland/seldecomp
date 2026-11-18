@@ -1,0 +1,73 @@
+. seldecomp wage (demo: race collgrad) (geo: south smsa) c.age, by(married)
+  contvars(age 5) sequentially covariatedetail
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,246
+Focal Group (raked): married = 0 (Single)       Focal obs         =        804
+Reference Group:     married = 1 (Married)      Reference obs     =      1,442
+Blocks added sequentially (others unconstrained):
+  stage 1: + demo (race collgrad)
+  stage 2: + geo (south smsa)
+  stage 3: + age
+  (age: 5 quantile bins, cut points from the pooled sample)
+
+==============================================================================
+
+Raking variables: weighted shares by level
+------------------------------------------------------------------------------
+                             ----- Obs. ----  --------- Weighted share -------
+Level                          Focal    Ref.    Focal    Ref.   Raked      Gap
+------------------------------------------------------------------------------
+race
+  1 (White)                      487   1,150   0.6057  0.7975  0.7975  -0.1918
+  2 (Black)                      309     274   0.3843  0.1900  0.1900   0.1943
+  3 (Other)                        8      18   0.0100  0.0125  0.0125  -0.0025
+collgrad
+  0 (Not college grad)           616   1,098   0.7662  0.7614  0.7614   0.0047
+  1 (College grad)               188     344   0.2338  0.2386  0.2386  -0.0047
+south
+  0 (Not south)                  464     840   0.5771  0.5825  0.5825  -0.0054
+  1 (South)                      340     602   0.4229  0.4175  0.4175   0.0054
+smsa
+  0 (Not SMSA)                   208     457   0.2587  0.3169  0.3169  -0.0582
+  1 (SMSA)                       596     985   0.7413  0.6831  0.6831   0.0582
+age
+  <= 36                          196     374   0.2438  0.2594  0.2594  -0.0156
+  (36, 38]                       161     283   0.2002  0.1963  0.1963   0.0040
+  (38, 40]                       155     287   0.1928  0.1990  0.1990  -0.0062
+  (40, 42]                       146     236   0.1816  0.1637  0.1637   0.0179
+  > 42                           146     262   0.1816  0.1817  0.1817  -0.0001
+------------------------------------------------------------------------------
+Focal: focal group. Ref.: reference group. Raked: focal group share under
+    the final raked weights. Gap: Focal minus Reference share (the order of
+    the difference).
+
+==============================================================================
+
+Decomposition by raking stage (sequentially)
+------------------------------------------------------------------------------
+                                -------- Cumulative -------- ---- Marginal ---
+Stage Block        Raked mean   Explained Unexplained      %  Explained      %
+------------------------------------------------------------------------------
+    1 demo            8.449083  -.3683181    .8571054  -75.4  -.3683181  -75.4
+    2 geo             8.288708  -.2079423    .6967295  -42.5   .1603759   32.8
+    3 age             8.304936  -.2241708    .7129581  -45.9  -.0162285   -3.3
+------------------------------------------------------------------------------
+%: percent of the difference.
+
+------------------------------------------------------------------------------
+            wage |   Estimate
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.080765
+Raked focal mean |   8.304936
+  Reference mean |   7.591978
+      Difference |   .4887873
+       Explained |  -.2241708
+     Unexplained |   .7129581
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: -45.9%
+
+Raking (all stages): weight iterations converged; all targets met.
+Raking factors (all stages): .3303-1.963.
+Thin target levels (<10 focal obs): 1.

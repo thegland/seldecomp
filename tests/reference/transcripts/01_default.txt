@@ -1,0 +1,29 @@
+. seldecomp wage i.collgrad i.south c.ttl_exp, by(married) contvars(ttl_exp
+  4)
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,246
+Focal Group (raked): married = 0 (Single)       Focal obs         =        804
+Reference Group:     married = 1 (Married)      Reference obs     =      1,442
+Raking variables: collgrad south ttl_exp
+  (ttl_exp: 4 quantile bins, cut points from the pooled sample)
+
+==============================================================================
+
+Decomposition
+
+------------------------------------------------------------------------------
+            wage |   Estimate
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.080765
+Raked focal mean |   7.960079
+  Reference mean |   7.591978
+      Difference |   .4887873
+       Explained |   .1206859
+     Unexplained |   .3681014
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: 24.7%
+
+Raking: weight iterations converged; all targets met.
+Raking factors: .7979-1.289.

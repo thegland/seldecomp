@@ -1,0 +1,47 @@
+. seldecomp wage (a: collgrad) (b: race2) (c: south), by(married)
+  sequentially fixothermargins mincell(300)
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,246
+Focal Group (raked): married = 0 (Single)       Focal obs         =        804
+Reference Group:     married = 1 (Married)      Reference obs     =      1,442
+Blocks added sequentially (others held at focal group margins):
+  stage 1: + a (collgrad)
+  stage 2: + b (race2)
+  stage 3: + c (south)
+
+note: level absent from the reference group (zero raked weight), stages 2-3:
+      race2 = 9 (11 obs)
+
+==============================================================================
+
+Decomposition by raking stage (sequentially, fixothermargins)
+------------------------------------------------------------------------------
+                                -------- Cumulative -------- ---- Marginal ---
+Stage Block        Raked mean   Explained Unexplained      %  Explained      %
+------------------------------------------------------------------------------
+    1 a               8.099777  -.0190115    .5077987   -3.9  -.0190115   -3.9
+    2 b               8.338582  -.2578165    .7466038  -52.7   -.238805  -48.9
+    3 c               8.353657  -.2728921    .7616793  -55.8  -.0150756   -3.1
+------------------------------------------------------------------------------
+%: percent of the difference.
+
+------------------------------------------------------------------------------
+            wage |   Estimate
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.080765
+Raked focal mean |   8.353657
+  Reference mean |   7.591978
+      Difference |   .4887873
+       Explained |  -.2728921
+     Unexplained |   .7616793
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: -55.8%
+explained = .0240039 (change of support: 11 focal group obs with 1.4% of its
+    weight, mean wage 9.811225, get zero weight) + -.2968959 (reweighting
+    within the common support)
+
+Raking (all stages): weight iterations converged; all targets met.
+Raking factors (all stages): .3815-1.665.
+Thin target levels (<300 focal obs): 2.

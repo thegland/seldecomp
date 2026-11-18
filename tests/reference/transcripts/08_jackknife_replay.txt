@@ -1,0 +1,29 @@
+. seldecomp
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,232
+Focal Group (raked): married = 0 (Single)       Focal obs         =        798
+Reference Group:     married = 1 (Married)      Reference obs     =      1,434
+Inference: Jackknife                            Replications      =         12
+Raking variables: collgrad south
+
+==============================================================================
+
+Decomposition
+
+------------------------------------------------------------------------------
+                 |             Jackknife
+            wage |   Estimate  std. err.        t P>|t|   [95% conf. interval]
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.113361   .5392121    15.05 0.000   6.926563    9.300159
+Raked focal mean |   8.126242   .5719982    14.21 0.000   6.867282    9.385201
+  Reference mean |    7.59988   .3736354    20.34 0.000   6.777514    8.422246
+      Difference |   .5134807   .2564129     2.00 0.070  -.0508802    1.077842
+       Explained |  -.0128811    .202808    -0.06 0.950  -.4592585    .4334963
+     Unexplained |   .5263618    .356981     1.47 0.168  -.2593482    1.312072
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: -2.5%
+
+Raking: weight iterations converged; all targets met.
+Raking factors: .9923-1.013.

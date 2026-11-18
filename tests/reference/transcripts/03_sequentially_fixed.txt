@@ -1,0 +1,42 @@
+. seldecomp wage (demo: race collgrad) (geo: south smsa) c.age, by(married)
+  contvars(age 5) sequentially fixothermargins
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,246
+Focal Group (raked): married = 0 (Single)       Focal obs         =        804
+Reference Group:     married = 1 (Married)      Reference obs     =      1,442
+Blocks added sequentially (others held at focal group margins):
+  stage 1: + demo (race collgrad)
+  stage 2: + geo (south smsa)
+  stage 3: + age
+  (age: 5 quantile bins, cut points from the pooled sample)
+
+==============================================================================
+
+Decomposition by raking stage (sequentially, fixothermargins)
+------------------------------------------------------------------------------
+                                -------- Cumulative -------- ---- Marginal ---
+Stage Block        Raked mean   Explained Unexplained      %  Explained      %
+------------------------------------------------------------------------------
+    1 demo            8.417682  -.3369164    .8257037  -68.9  -.3369164  -68.9
+    2 geo             8.295156  -.2143912    .7031785  -43.9   .1225252   25.1
+    3 age             8.304936  -.2241708    .7129581  -45.9  -.0097796   -2.0
+------------------------------------------------------------------------------
+%: percent of the difference.
+
+------------------------------------------------------------------------------
+            wage |   Estimate
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.080765
+Raked focal mean |   8.304936
+  Reference mean |   7.591978
+      Difference |   .4887873
+       Explained |  -.2241708
+     Unexplained |   .7129581
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: -45.9%
+
+Raking (all stages): weight iterations converged; all targets met.
+Raking factors (all stages): .3303-1.963.
+Thin target levels (<10 focal obs): 1.

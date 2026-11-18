@@ -1,0 +1,60 @@
+. seldecomp wage i.collgrad i.south [pw=wt], by(married) covariatedetail
+  diagnostics
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,246
+Focal Group (raked): married = 0 (Single)       Focal obs         =        804
+Reference Group:     married = 1 (Married)      Reference obs     =      1,442
+Weights: pweight = wt                           Focal wgt sum     =    1,013.8
+                                                Reference wgt sum =    1,810.9
+Raking variables: collgrad south
+
+==============================================================================
+
+Raking diagnostics
+------------------------------------------------------------------------------
+   -- Raking factor --       Kish effective N    ESS
+      Min      Max      CV      Base     Raked   ratio Zero wt  At bound
+------------------------------------------------------------------------------
+    .9866    1.019  .01075     792.4     792.3  1.000        0        0
+------------------------------------------------------------------------------
+Raking factor = raked / base weight. ESS ratio = base / raked effective N.
+Zero wt: zero raked weights. At bound: distinct weights at a trimming bound.
+Thin target levels (<10 focal obs): 0.
+
+Raking: weight iterations converged; all targets met.
+
+==============================================================================
+
+Raking variables: weighted shares by level
+------------------------------------------------------------------------------
+                             ----- Obs. ----  --------- Weighted share -------
+Level                          Focal    Ref.    Focal    Ref.   Raked      Gap
+------------------------------------------------------------------------------
+collgrad
+  0 (Not college grad)           616   1,098   0.7653  0.7625  0.7625   0.0028
+  1 (College grad)               188     344   0.2347  0.2375  0.2375  -0.0028
+south
+  0 (Not south)                  464     840   0.5775  0.5817  0.5817  -0.0042
+  1 (South)                      340     602   0.4225  0.4183  0.4183   0.0042
+------------------------------------------------------------------------------
+Focal: focal group. Ref.: reference group. Raked: focal group share under
+    the final raked weights. Gap: Focal minus Reference share (the order of
+    the difference).
+
+==============================================================================
+
+Decomposition
+
+------------------------------------------------------------------------------
+            wage |   Estimate
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.060156
+Raked focal mean |   8.079851
+  Reference mean |   7.563321
+      Difference |    .496835
+       Explained |  -.0196953
+     Unexplained |   .5165304
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: -4.0%

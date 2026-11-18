@@ -1,0 +1,37 @@
+. seldecomp y (a: x) (b: z), by(grp) sequentially fixothermargins
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,000
+Focal Group (raked): grp = 0                    Focal obs         =      1,000
+Reference Group:     grp = 1                    Reference obs     =      1,000
+Blocks added sequentially (others held at focal group margins):
+  stage 1: + a (x)
+  stage 2: + b (z)
+
+==============================================================================
+
+Decomposition by raking stage (sequentially, fixothermargins)
+------------------------------------------------------------------------------
+                                -------- Cumulative -------- ---- Marginal ---
+Stage Block        Raked mean   Explained Unexplained      %  Explained      %
+------------------------------------------------------------------------------
+    1 a                   .498       .004         -10    0.0       .004    0.0
+    2 b                   .498       .004         -10    0.0          0    0.0
+------------------------------------------------------------------------------
+%: percent of the difference.
+
+------------------------------------------------------------------------------
+               y |   Estimate
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |       .502
+Raked focal mean |       .498
+  Reference mean |     10.498
+      Difference |     -9.996
+       Explained |       .004
+     Unexplained |        -10
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: 0.0%
+
+Raking (all stages): weight iterations converged; all targets met.
+Raking factors (all stages): .992-1.008.

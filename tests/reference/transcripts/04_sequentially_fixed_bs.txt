@@ -1,0 +1,58 @@
+. seldecomp wage (demo: race collgrad) (geo: south smsa), by(married)
+  sequentially fixothermargins bayesboot(reps(100) rseed(1) nodots)
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,246
+Focal Group (raked): married = 0 (Single)       Focal obs         =        804
+Reference Group:     married = 1 (Married)      Reference obs     =      1,442
+Inference: Bayesian bootstrap                   Replications      =        100
+Blocks added sequentially (others held at focal group margins):
+  stage 1: + demo (race collgrad)
+  stage 2: + geo (south smsa)
+
+==============================================================================
+
+Decomposition by raking stage (sequentially, fixothermargins)
+------------------------------------------------------------------------------
+                                -------- Cumulative -------- ---- Marginal ---
+Stage Block        Raked mean   Explained Unexplained      %  Explained      %
+------------------------------------------------------------------------------
+    1 demo            8.410859  -.3300938    .8188811  -67.5  -.3300938  -67.5
+    2 geo             8.288708  -.2079423    .6967295  -42.5   .1221515   25.0
+------------------------------------------------------------------------------
+%: percent of the difference.
+
+------------------------------------------------------------------------------
+                 |             Bootstrap                      Normal-based
+            wage |   Estimate  std. err.        z P>|z|   [95% conf. interval]
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.080765   .2090664    38.65 0.000   7.671003    8.490528
+Raked focal mean |   8.288708   .2507869    33.05 0.000   7.797174    8.780241
+  Reference mean |   7.591978   .1507844    50.35 0.000   7.296446     7.88751
+      Difference |   .4887873   .2590665     1.89 0.059  -.0189737    .9965483
+       Explained |  -.2079423   .1359556    -1.53 0.126  -.4744104    .0585258
+     Unexplained |   .6967295   .2624302     2.65 0.008   .1823758    1.211083
+-----------------+------------------------------------------------------------
+By stage         | Marginal explained
+            demo |  -.3300938   .1138887    -2.90 0.004  -.5533116   -.1068761
+             geo |   .1221515   .0620077     1.97 0.049   .0006186    .2436845
+-----------------+------------------------------------------------------------
+By stage         | Cumulative explained
+            demo |  -.3300938   .1138887    -2.90 0.004  -.5533116   -.1068761
+             geo |  -.2079423   .1359556    -1.53 0.126  -.4744104    .0585258
+-----------------+------------------------------------------------------------
+By stage         | Cumulative unexplained
+            demo |   .8188811   .2687051     3.05 0.002   .2922287    1.345533
+             geo |   .6967295   .2624302     2.65 0.008   .1823758    1.211083
+-----------------+------------------------------------------------------------
+By stage         | Raked focal group mean
+            demo |   8.410859   .2455859    34.25 0.000    7.92952    8.892199
+             geo |   8.288708   .2507869    33.05 0.000   7.797174    8.780241
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+Explained share of the difference: -42.5%, bootstrap std. err. 226.1
+    95% percentile CI: -306.6% to 666.7%
+
+Raking (all stages): weight iterations converged; all targets met.
+Raking factors (all stages): .3754-1.786.
+Thin target levels (<10 focal obs): 1.

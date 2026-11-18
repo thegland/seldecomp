@@ -1,0 +1,44 @@
+. seldecomp wage i.collgrad i.south, by(married) bayesboot(reps(50) rseed(1)
+  cluster(industry) bca)
+
+Bayesian bootstrap replications (50)
+----+--- 1 ---+--- 2 ---+--- 3 ---+--- 4 ---+--- 5 
+..................................................    50
+
+Jackknife for BCa acceleration (12 deletions)
+----+--- 1 ---+--- 2 ---+--- 3 ---+--- 4 ---+--- 5 
+............
+
+Raking decomposition (Pylypchuk-Selden)         Number of obs     =      2,232
+Focal Group (raked): married = 0 (Single)       Focal obs         =        798
+Reference Group:     married = 1 (Married)      Reference obs     =      1,434
+Inference: Bayesian bootstrap                   Replications      =         50
+                               (Replications based on 12 clusters in industry)
+Raking variables: collgrad south
+
+note: 14 observations with a missing bayesboot() cluster id excluded (6 in
+      the focal group, 8 in the reference group)
+
+==============================================================================
+
+Decomposition
+
+------------------------------------------------------------------------------
+                 |             Bootstrap                           BCa
+            wage |   Estimate  std. err.        t P>|t|   [95% conf. interval]
+-----------------+------------------------------------------------------------
+Overall          |
+      Focal mean |   8.113361    .605517    13.40 0.000   7.037453    9.462768
+Raked focal mean |   8.126242   .5709755    14.23 0.000   7.235776     9.31849
+  Reference mean |    7.59988   .4104149    18.52 0.000   6.820491    8.553927
+      Difference |   .5134807   .2963011     1.73 0.111  -.0567036    1.008476
+       Explained |  -.0128811   .1003361    -0.13 0.900  -.2431121    .1131665
+     Unexplained |   .5263618   .2762455     1.91 0.083   .1694129       1.046
+------------------------------------------------------------------------------
+Difference = focal - reference. Explained = focal - raked focal.
+(t: 11 degrees of freedom, the number of clusters less 1)
+Explained share of the difference: -2.5%, bootstrap std. err. 156.0
+    95% percentile CI: -109.3% to 136.5%
+
+Raking: weight iterations converged; all targets met.
+Raking factors: .9923-1.013.
