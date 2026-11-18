@@ -1,0 +1,2 @@
+s01 : seldecomp y x1 x2 [pw=wt] if id <= 600, by(group) bayesboot(reps(1000) rseed(77) nodots)
+s02 : seldecomp y (a: x1) (b: x2) [pw=wt] if id <= 600, by(group) sequentially bayesboot(reps(1000) rseed(78) cluster(cluster) nodots)
