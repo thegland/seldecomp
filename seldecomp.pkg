@@ -1,0 +1,30 @@
+v 3
+d 'SELDECOMP': raking-based reweighting decomposition of group differences in means
+d
+d  seldecomp decomposes the difference in the mean of an outcome
+d between two groups into a part explained by group differences in
+d the distributions of a set of categorical (or binned continuous)
+d raking variables and an unexplained remainder, using the
+d nonparametric raking (iterative proportional fitting) method of
+d Pylypchuk and Selden (2008, Journal of Health Economics).
+d
+d KW: decomposition
+d KW: Oaxaca-Blinder-Kitagawa
+d KW: Oaxaca-Blinder
+d KW: raking
+d KW: reweighting
+d KW: iterative proportional fitting
+d KW: group differences
+d KW: Bayesian bootstrap
+d
+d Requires: Stata version 16.1
+d
+d Distribution-Date: 20261118
+d
+d Author: Tom Selden & Thomas A. Hegland
+d Support: email thomas.hegland@ahrq.hhs.gov
+d
+f seldecomp.ado
+f seldecomp.sthlp
+f seldecomp_results.sthlp
+f seldecomp_estat.ado

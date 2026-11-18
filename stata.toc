@@ -1,0 +1,8 @@
+v 3
+d seldecomp: raking (reweighting) decomposition of group differences in means
+d Nonparametric decomposition of Pylypchuk and Selden (2008) for Stata 16.1+.
+d
+d Tom Selden and Thomas A. Hegland
+d https://github.com/thegland/seldecomp
+d
+p seldecomp Raking (reweighting) decomposition of group differences in means
